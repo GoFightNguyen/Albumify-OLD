@@ -1,0 +1,17 @@
+﻿@model Albumify.Domain.Spotify.SpotifyAuthenticationResult
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div class="text-center">
+    <h1 class="display-4">Spotify Authentication</h1>
+    <p>
+        <strong>Access Token:</strong> <code>@Model.AccessToken</code>
+        <strong>Token Type:</strong> <code>@Model.TokenType</code>
+        <strong>Expires In:</strong> <code>@Model.ExpiresIn</code>
+    </p>
+</div>
