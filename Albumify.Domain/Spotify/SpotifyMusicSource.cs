@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using System.Net;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Albumify.Domain.Spotify
 {
@@ -79,6 +80,29 @@ namespace Albumify.Domain.Spotify
             var encodedAuthorization = Convert.ToBase64String(authorizationBytes);
             var authenticationHeader = new AuthenticationHeaderValue("Basic", encodedAuthorization);
             return authenticationHeader;
+        }
+
+        public async Task<IEnumerable<SpotifySearchAlbumResult>> FindAlbumsByArtist(string artistName)
+        {
+            var authResult = await AuthenticateUsingClientCredentialsFlowAsync();
+            using (var client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue(authResult.TokenType, authResult.AccessToken);
+
+                var queryParams = new Dictionary<string, string>
+                    {
+                        // Keywords are matched in any order unless surrounded by double quotations
+                        {"q", $"artist:\"{artistName}\"" },
+                        {"type", "album"}
+                    };
+                var url = QueryHelpers.AddQueryString("https://api.spotify.com/v1/search", queryParams);
+                var response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                var responseStream = response.Content.ReadAsStreamAsync();
+                var searchResult = await JsonSerializer.DeserializeAsync<SpotifyFindAlbumsByArtistResult>(await responseStream);
+                return searchResult.Albums.Items;
+            }
         }
     }
 }
