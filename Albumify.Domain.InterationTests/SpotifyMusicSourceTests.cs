@@ -117,7 +117,7 @@ namespace Albumify.Domain.IntegrationTests
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
             var sut = new SpotifyMusicSource(config);
-            var result = await sut.FindAlbumsByArtist("Jonezetta");
+            var result = await sut.FindAlbumsByArtistAsync("Jonezetta");
 
             var expected1 = new SpotifySearchAlbumResult
             {
@@ -157,7 +157,7 @@ namespace Albumify.Domain.IntegrationTests
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
             var sut = new SpotifyMusicSource(config);
-            var result = await sut.FindAlbumsByArtist("Search the City");
+            var result = await sut.FindAlbumsByArtistAsync("Search the City");
 
             var expected1 = new SpotifySearchAlbumResult
             {
@@ -175,7 +175,7 @@ namespace Albumify.Domain.IntegrationTests
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
             var sut = new SpotifyMusicSource(config);
-            var result = await sut.FindAlbumsByArtist("Forever Changed");
+            var result = await sut.FindAlbumsByArtistAsync("Forever Changed");
             var expected = new List<SpotifySearchAlbumResult>();
             result.Should().BeEquivalentTo(expected);
         }

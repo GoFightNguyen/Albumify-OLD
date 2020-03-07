@@ -20,9 +20,9 @@ namespace Albumify.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var spotifyAuthenticationResult = await _spotifyMusicSource.AuthenticateUsingClientCredentialsFlowAsync();
+            var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync("Jonezetta");
 
-            return View(spotifyAuthenticationResult);
+            return View(albums);
         }
 
         public IActionResult Privacy()

@@ -82,7 +82,7 @@ namespace Albumify.Domain.Spotify
             return authenticationHeader;
         }
 
-        public async Task<IEnumerable<SpotifySearchAlbumResult>> FindAlbumsByArtist(string artistName)
+        public async Task<IEnumerable<SpotifySearchAlbumResult>> FindAlbumsByArtistAsync(string artistName)
         {
             var authResult = await AuthenticateUsingClientCredentialsFlowAsync();
             using (var client = new HttpClient())
@@ -92,8 +92,7 @@ namespace Albumify.Domain.Spotify
 
                 var queryParams = new Dictionary<string, string>
                     {
-                        // Keywords are matched in any order unless surrounded by double quotations
-                        {"q", $"artist:\"{artistName}\"" },
+                        {"q", $"artist:\"{artistName}\"" }, // Keywords are matched in any order unless surrounded by double quotations
                         {"type", "album"}
                     };
                 var url = QueryHelpers.AddQueryString("https://api.spotify.com/v1/search", queryParams);
