@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using System.Net;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace Albumify.Domain.Spotify
 {
@@ -25,7 +24,7 @@ namespace Albumify.Domain.Spotify
         private readonly IConfiguration _config;
         private readonly HttpClient _httpClient;
 
-        private SpotifyAuthorizationResult _authResult;
+        private SpotifyAuthorizationResult _authResult = new SpotifyAuthorizationResult();
 
         public SpotifyClientCredentialsFlow(IConfiguration config, HttpClient httpClient)
         {
@@ -35,8 +34,7 @@ namespace Albumify.Domain.Spotify
         
         public async Task<SpotifyAuthorizationResult> RequestAsync()
         {
-            // TODO: test; make sure to set the field too
-            if (_authResult != null) return _authResult;
+            if (_authResult.IsValid) return _authResult;
 
             var formContent = GenerateAuthenticationBody();
             var authenticationHeader = GenerateAuthenticationHeader();
@@ -60,6 +58,7 @@ namespace Albumify.Domain.Spotify
             var responseStream = response.Content.ReadAsStreamAsync();
             var spotifyAuthenticationResult = await JsonSerializer.DeserializeAsync<SpotifyAuthorizationResult>(await responseStream);
 
+            _authResult = spotifyAuthenticationResult;
             return spotifyAuthenticationResult;
         }
 

@@ -2,7 +2,7 @@
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifyAuthorizationResult
+    public struct SpotifyAuthorizationResult
     {
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
@@ -12,5 +12,8 @@ namespace Albumify.Domain.Spotify
 
         [JsonPropertyName("expires_in")]
         public int ExpiresIn { get; set; }
+
+        [JsonIgnore]
+        public bool IsValid => !string.IsNullOrWhiteSpace(AccessToken);
     }
 }
