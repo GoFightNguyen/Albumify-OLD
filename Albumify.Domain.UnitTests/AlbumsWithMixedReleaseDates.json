@@ -1,0 +1,108 @@
+{
+  "albums": {
+    "href": "https://api.spotify.com/v1/search?query=artist%3A%22Norma+Jean%22&type=album&offset=0&limit=20",
+    "items": [
+      {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/2fsk4VlJdNF6G8cCMDrrzB"
+            },
+            "href": "https://api.spotify.com/v1/artists/2fsk4VlJdNF6G8cCMDrrzB",
+            "id": "2fsk4VlJdNF6G8cCMDrrzB",
+            "name": "Norma Jean Martine",
+            "type": "artist",
+            "uri": "spotify:artist:2fsk4VlJdNF6G8cCMDrrzB"
+          }
+        ],
+        "available_markets": [
+          "AD",
+          "IL",
+          "US"
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/7yxTKAsaQDI6QQPSkgGkSw"
+        },
+        "href": "https://api.spotify.com/v1/albums/7yxTKAsaQDI6QQPSkgGkSw",
+        "id": "7yxTKAsaQDI6QQPSkgGkSw",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273b7e33de2aa7f5317d20b2cf9",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02b7e33de2aa7f5317d20b2cf9",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851b7e33de2aa7f5317d20b2cf9",
+            "width": 64
+          }
+        ],
+        "name": "Full Release Date",
+        "release_date": "2016-09-09",
+        "release_date_precision": "day",
+        "total_tracks": 12,
+        "type": "album",
+        "uri": "spotify:album:7yxTKAsaQDI6QQPSkgGkSw"
+      },
+      {
+        "album_type": "album",
+        "artists": [
+          {
+            "external_urls": {
+              "spotify": "https://open.spotify.com/artist/2Tq4xKjGkoZyAzdklz74oM"
+            },
+            "href": "https://api.spotify.com/v1/artists/2Tq4xKjGkoZyAzdklz74oM",
+            "id": "2Tq4xKjGkoZyAzdklz74oM",
+            "name": "Norma Jean Wright",
+            "type": "artist",
+            "uri": "spotify:artist:2Tq4xKjGkoZyAzdklz74oM"
+          }
+        ],
+        "available_markets": [
+          "CY",
+          "IE",
+          "US"
+        ],
+        "external_urls": {
+          "spotify": "https://open.spotify.com/album/7Bo2lPXUL79QoKPzbFT1TZ"
+        },
+        "href": "https://api.spotify.com/v1/albums/7Bo2lPXUL79QoKPzbFT1TZ",
+        "id": "7Bo2lPXUL79QoKPzbFT1TZ",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273f98d9a326a2ce6dd58ecd8fb",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02f98d9a326a2ce6dd58ecd8fb",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851f98d9a326a2ce6dd58ecd8fb",
+            "width": 64
+          }
+        ],
+        "name": "Year Only",
+        "release_date": "1978",
+        "release_date_precision": "year",
+        "total_tracks": 7,
+        "type": "album",
+        "uri": "spotify:album:7Bo2lPXUL79QoKPzbFT1TZ"
+      }
+    ],
+    "limit": 20,
+    "next": null,
+    "offset": 0,
+    "previous": null,
+    "total": 2
+  }
+}

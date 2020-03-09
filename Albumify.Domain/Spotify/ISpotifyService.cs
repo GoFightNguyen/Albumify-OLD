@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace Albumify.Domain.Spotify
 {
-    public interface ISpotifyMusicSource
+    public interface ISpotifyService
     {
-        Task<SpotifyAuthenticationResult> AuthenticateUsingClientCredentialsFlowAsync();
         Task<IEnumerable<SpotifySearchAlbumResult>> FindAlbumsByArtistAsync(string artistName);
     }
 }

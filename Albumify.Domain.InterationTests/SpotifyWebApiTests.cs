@@ -2,111 +2,14 @@ using Albumify.Domain.Spotify;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Albumify.Domain.IntegrationTests
 {
     [TestClass]
-    public class TheSpotifyMusicSource
-    {
-        [TestClass]
-        public class ThrowsAnException_WhenAuthenticatingUsingClientCredentialsFlow
-        {
-            [TestMethod]
-            public async Task WithAnInvalidClientId()
-            {
-                var config = new ConfigurationBuilder()
-                .AddUserSecrets("Albumify")
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    { "SpotifyClientId", "wrong" },
-                })
-                .Build();
-
-                var thrownEx = await TryToAuthenticate(config);
-
-                Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client. " +
-                    "Please verify the configuration for SpotifyClientId and SpotifyClientSecret",
-                    thrownEx.Message);
-            }
-
-            [TestMethod]
-            public async Task WithAnInvalidClientSecret()
-            {
-                var config = new ConfigurationBuilder()
-                    .AddUserSecrets("Albumify")
-                    .AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "SpotifyClientSecret", "wrong" },
-                    })
-                    .Build();
-
-                var thrownEx = await TryToAuthenticate(config);
-
-                Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client secret. " +
-                    "Please verify the configuration for SpotifyClientId and SpotifyClientSecret",
-                    thrownEx.Message);
-            }
-
-            [TestMethod]
-            public async Task WithAnInvalidClientIdAndInvalidClientSecret()
-            {
-                var config = new ConfigurationBuilder()
-                    .AddUserSecrets("Albumify")
-                    .AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "SpotifyClientId", "wrong" },
-                        { "SpotifyClientSecret", "alsoWrong" }
-                    })
-                    .Build();
-
-                var thrownEx = await TryToAuthenticate(config);
-
-                Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client. " +
-                    "Please verify the configuration for SpotifyClientId and SpotifyClientSecret",
-                    thrownEx.Message);
-            }
-
-            private static async Task<Exception> TryToAuthenticate(IConfigurationRoot config)
-            {
-                Exception thrownEx = null;
-                try
-                {
-                    var sut = new SpotifyMusicSource(config);
-                    await sut.AuthenticateUsingClientCredentialsFlowAsync();
-
-                }
-                catch (Exception ex)
-                {
-                    thrownEx = ex;
-                }
-
-                Assert.IsNotNull(thrownEx);
-                Assert.IsInstanceOfType(thrownEx, typeof(SpotifyAuthenticationException));
-                return thrownEx;
-            }
-        }
-
-        [TestClass]
-        public class SuccessfullyAuthenticatesUsingClientCredentialsFlow
-        {
-            [TestMethod]
-            public async Task WithValidCredentials()
-            {
-                var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
-                var sut = new SpotifyMusicSource(config);
-                var result = await sut.AuthenticateUsingClientCredentialsFlowAsync();
-                Assert.AreEqual(3600, result.ExpiresIn);
-                Assert.AreEqual("Bearer", result.TokenType);
-                Assert.IsFalse(string.IsNullOrWhiteSpace(result.AccessToken));
-            }
-        }
-    }
-
-    [TestClass]
-    public class TheSpotifyMusicSource_WhenFindingAlbumsByArtist
+    public class TheSpotifyWebApi_WhenFindingAlbumsByArtist
     {
         // pagination
         // order is not supported by Spotify in v1
@@ -116,35 +19,35 @@ namespace Albumify.Domain.IntegrationTests
         public async Task IsSuccessful_WithASingleWordArtistName()
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
-            var sut = new SpotifyMusicSource(config);
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
             var result = await sut.FindAlbumsByArtistAsync("Jonezetta");
 
             var expected1 = new SpotifySearchAlbumResult
             {
                 Name = "Popularity",
                 NumberOfSongs = 11,
-                ReleaseDate = new DateTime(2006, 1, 1)
+                ReleaseDate = "2006-01-01"
                 //album
             };
             var expected2 = new SpotifySearchAlbumResult
             {
                 Name = "Cruel To Be Young",
                 NumberOfSongs = 12,
-                ReleaseDate = new DateTime(2008, 1, 1)
+                ReleaseDate = "2008-01-01"
                 //album
             };
             var expected3= new SpotifySearchAlbumResult
             {
                 Name = "Sony Connect Set",
                 NumberOfSongs = 5,
-                ReleaseDate = new DateTime(2007, 1, 1)
+                ReleaseDate = "2007-01-01"
                 //single
             };
             var expected4 = new SpotifySearchAlbumResult
             {
                 Name = "Three Songs",
                 NumberOfSongs = 3,
-                ReleaseDate = new DateTime(2006, 1, 1)
+                ReleaseDate = "2006-01-01"
                 //single
             };
             var expected = new List<SpotifySearchAlbumResult> { expected1, expected2, expected3, expected4 };
@@ -156,14 +59,14 @@ namespace Albumify.Domain.IntegrationTests
         public async Task IsSuccessful_WithAnArtistNameContainingSpaces()
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
-            var sut = new SpotifyMusicSource(config);
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
             var result = await sut.FindAlbumsByArtistAsync("Search the City");
 
             var expected1 = new SpotifySearchAlbumResult
             {
                 Name = "A Fire So Big The Heavens Can See It",
                 NumberOfSongs = 10,
-                ReleaseDate = new DateTime(2008, 1, 1)
+                ReleaseDate = "2008-01-01"
                 //album
             };
             var expected = new List<SpotifySearchAlbumResult> { expected1 };
@@ -174,8 +77,8 @@ namespace Albumify.Domain.IntegrationTests
         public async Task ReturnsEmpty_WithAnUnknownArtist()
         {
             var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
-            var sut = new SpotifyMusicSource(config);
-            var result = await sut.FindAlbumsByArtistAsync("Forever Changed");
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var result = await sut.FindAlbumsByArtistAsync("Forever Changed Again");
             var expected = new List<SpotifySearchAlbumResult>();
             result.Should().BeEquivalentTo(expected);
         }

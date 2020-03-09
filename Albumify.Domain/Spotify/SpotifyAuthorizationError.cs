@@ -2,7 +2,7 @@
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifyAuthenticationError
+    public class SpotifyAuthorizationError
     {
         [JsonPropertyName("error")]
         public string Error { get; set; }

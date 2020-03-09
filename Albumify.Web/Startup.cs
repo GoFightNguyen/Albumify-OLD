@@ -21,7 +21,11 @@ namespace Albumify.Web
         {
             services.AddControllersWithViews();
 
-            services.AddTransient<ISpotifyMusicSource, SpotifyMusicSource>();
+            // https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests?view=aspnetcore-3.1#basic-usage
+            // Enable basic usage of IHttpClientFactory
+            // By default, all clients created using IHttpClientFactory will record log messages for all requests
+            services.AddHttpClient<ISpotifyAuthorization, SpotifyClientCredentialsFlow>();
+            services.AddHttpClient<ISpotifyService, SpotifyWebApi>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

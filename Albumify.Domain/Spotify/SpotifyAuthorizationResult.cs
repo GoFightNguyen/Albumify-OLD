@@ -2,7 +2,7 @@
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifyAuthenticationResult
+    public class SpotifyAuthorizationResult
     {
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }

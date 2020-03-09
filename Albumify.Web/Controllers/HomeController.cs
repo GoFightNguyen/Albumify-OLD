@@ -10,9 +10,9 @@ namespace Albumify.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISpotifyMusicSource _spotifyMusicSource;
+        private readonly ISpotifyService _spotifyMusicSource;
 
-        public HomeController(ILogger<HomeController> logger, ISpotifyMusicSource spotifyMusicSource)
+        public HomeController(ILogger<HomeController> logger, ISpotifyService spotifyMusicSource)
         {
             _logger = logger;
             _spotifyMusicSource = spotifyMusicSource;

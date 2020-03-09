@@ -2,9 +2,9 @@
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifyAuthenticationException : Exception
+    public class SpotifyAuthorizationException : Exception
     {
-        public SpotifyAuthenticationException(SpotifyAuthenticationError error)
+        public SpotifyAuthorizationException(SpotifyAuthorizationError error)
             : base($"Failed to authenticate with Spotify using Client Credentials Flow: {error.Description}. " +
                     "Please verify the configuration for SpotifyClientId and SpotifyClientSecret")
         {

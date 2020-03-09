@@ -9,9 +9,8 @@ namespace Albumify.Domain.Spotify
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        // TODO: change to string if time is being written to storage
         [JsonPropertyName("release_date")]
-        public DateTime ReleaseDate { get; set; }
+        public string ReleaseDate { get; set; }
 
         [JsonPropertyName("total_tracks")]
         public int NumberOfSongs { get; set; }
