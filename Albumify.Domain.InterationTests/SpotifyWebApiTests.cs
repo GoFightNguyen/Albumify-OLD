@@ -73,16 +73,35 @@ namespace Albumify.Domain.IntegrationTests
             result.Should().BeEquivalentTo(expected);
         }
 
-        [TestMethod]
-        public async Task ReturnsEmpty_WithAnUnknownArtist()
+        [TestClass]
+        public class ReturnsEmpty
         {
-            var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
-            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
-            var result = await sut.FindAlbumsByArtistAsync("Forever Changed Again");
-            var expected = new List<SpotifySearchAlbumResult>();
-            result.Should().BeEquivalentTo(expected);
-        }
+            private static SpotifyWebApi sut;
 
+            [ClassInitialize]
+            public static void ClassInitialize(TestContext _)
+            {
+                var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
+                sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            }
+
+            [DataTestMethod]
+            [DataRow("")]
+            [DataRow("   ")]
+            [DataRow(null)]
+            public async Task ForABlankArtist(string artist)
+            {
+                var result = await sut.FindAlbumsByArtistAsync(artist);
+                result.Should().BeEmpty();
+            }
+
+            [TestMethod]
+            public async Task ForAnUnknownArtist()
+            {
+                var result = await sut.FindAlbumsByArtistAsync("Forever Changed Again");
+                result.Should().BeEmpty();
+            }
+        }
 
         /*
         {
