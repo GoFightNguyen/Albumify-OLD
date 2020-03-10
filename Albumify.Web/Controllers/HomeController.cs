@@ -18,9 +18,9 @@ namespace Albumify.Web.Controllers
             _spotifyMusicSource = spotifyMusicSource;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string artist)
         {
-            var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync("Jonezetta");
+            var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync(artist);
 
             return View(albums);
         }
