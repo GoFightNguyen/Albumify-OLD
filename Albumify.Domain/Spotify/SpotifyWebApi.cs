@@ -18,7 +18,7 @@ namespace Albumify.Domain.Spotify
             _spotifyAuthorization = spotifyAuthorization;
         }
 
-        public async Task<IEnumerable<SpotifySearchAlbumResult>> FindAlbumsByArtistAsync(string artistName)
+        public async Task<IEnumerable<SpotifySimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
@@ -36,7 +36,7 @@ namespace Albumify.Domain.Spotify
             response.EnsureSuccessStatusCode();
             var responseStream = response.Content.ReadAsStreamAsync();
             var searchResult = await JsonSerializer.DeserializeAsync<SpotifyFindAlbumsByArtistResult>(await responseStream);
-            return searchResult.Albums.Items;
+            return searchResult.PagingObject.Items;
         }
     }
 }

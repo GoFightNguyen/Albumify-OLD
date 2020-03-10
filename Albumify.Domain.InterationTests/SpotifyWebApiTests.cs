@@ -22,35 +22,35 @@ namespace Albumify.Domain.IntegrationTests
             var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
             var result = await sut.FindAlbumsByArtistAsync("Jonezetta");
 
-            var expected1 = new SpotifySearchAlbumResult
+            var expected1 = new SpotifySimplifiedAlbumObject
             {
                 Name = "Popularity",
                 NumberOfSongs = 11,
-                ReleaseDate = "2006-01-01"
-                //album
+                ReleaseDate = "2006-01-01",
+                Type = "album"
             };
-            var expected2 = new SpotifySearchAlbumResult
+            var expected2 = new SpotifySimplifiedAlbumObject
             {
                 Name = "Cruel To Be Young",
                 NumberOfSongs = 12,
-                ReleaseDate = "2008-01-01"
-                //album
+                ReleaseDate = "2008-01-01",
+                Type = "album"
             };
-            var expected3= new SpotifySearchAlbumResult
+            var expected3= new SpotifySimplifiedAlbumObject
             {
                 Name = "Sony Connect Set",
                 NumberOfSongs = 5,
-                ReleaseDate = "2007-01-01"
-                //single
+                ReleaseDate = "2007-01-01",
+                Type = "single"
             };
-            var expected4 = new SpotifySearchAlbumResult
+            var expected4 = new SpotifySimplifiedAlbumObject
             {
                 Name = "Three Songs",
                 NumberOfSongs = 3,
-                ReleaseDate = "2006-01-01"
-                //single
+                ReleaseDate = "2006-01-01",
+                Type = "single"
             };
-            var expected = new List<SpotifySearchAlbumResult> { expected1, expected2, expected3, expected4 };
+            var expected = new List<SpotifySimplifiedAlbumObject> { expected1, expected2, expected3, expected4 };
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -62,14 +62,14 @@ namespace Albumify.Domain.IntegrationTests
             var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
             var result = await sut.FindAlbumsByArtistAsync("Search the City");
 
-            var expected1 = new SpotifySearchAlbumResult
+            var expected1 = new SpotifySimplifiedAlbumObject
             {
                 Name = "A Fire So Big The Heavens Can See It",
                 NumberOfSongs = 10,
-                ReleaseDate = "2008-01-01"
-                //album
+                ReleaseDate = "2008-01-01",
+                Type = "album"
             };
-            var expected = new List<SpotifySearchAlbumResult> { expected1 };
+            var expected = new List<SpotifySimplifiedAlbumObject> { expected1 };
             result.Should().BeEquivalentTo(expected);
         }
 

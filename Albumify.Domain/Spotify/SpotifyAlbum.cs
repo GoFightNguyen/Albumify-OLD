@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifySearchAlbumResult
+    public class SpotifySimplifiedAlbumObject
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -15,18 +14,19 @@ namespace Albumify.Domain.Spotify
         [JsonPropertyName("total_tracks")]
         public int NumberOfSongs { get; set; }
 
-        //album_type
+        [JsonPropertyName("album_type")]
+        public string Type { get; set; }
+    }
+
+    public class SpotifyPagingObject
+    {
+        [JsonPropertyName("items")]
+        public List<SpotifySimplifiedAlbumObject> Items { get; set; }
     }
 
     public class SpotifyFindAlbumsByArtistResult
     {
         [JsonPropertyName("albums")]
-        public SpotifySearchAlbumsByArtistResult Albums { get; set; }
-    }
-
-    public class SpotifySearchAlbumsByArtistResult
-    {
-        [JsonPropertyName("items")]
-        public List<SpotifySearchAlbumResult> Items { get; set; }
+        public SpotifyPagingObject PagingObject { get; set; }
     }
 }
