@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Albumify.Web.Models;
 using Albumify.Domain.Spotify;
+using System.Linq;
 
 namespace Albumify.Web.Controllers
 {
@@ -21,8 +22,13 @@ namespace Albumify.Web.Controllers
         public async Task<IActionResult> Index(string artist)
         {
             var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync(artist);
+            var viewModels = albums
+                .Select(a => new AlbumViewModel(a))
+                .OrderByDescending(a => a.ReleaseDate)
+                .ThenBy(a => a.Name)
+                .ToList();
 
-            return View(albums);
+            return View(viewModels);
         }
 
         public IActionResult Privacy()
