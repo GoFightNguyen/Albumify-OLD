@@ -3,6 +3,18 @@ using System.Text.Json.Serialization;
 
 namespace Albumify.Domain.Spotify
 {
+    public class SpotifyImageObject
+    {
+        [JsonPropertyName("height")]
+        public int Height { get; set; }
+
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
+
+        [JsonPropertyName("width")]
+        public int Width { get; set; }
+    }
+
     public class SpotifySimplifiedAlbumObject
     {
         [JsonPropertyName("name")]
@@ -16,6 +28,9 @@ namespace Albumify.Domain.Spotify
 
         [JsonPropertyName("album_type")]
         public string Type { get; set; }
+
+        [JsonPropertyName("images")]
+        public List<SpotifyImageObject> Images { get; set; }
     }
 
     public class SpotifyPagingObject

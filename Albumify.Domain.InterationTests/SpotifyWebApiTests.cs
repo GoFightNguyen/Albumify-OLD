@@ -27,28 +27,52 @@ namespace Albumify.Domain.IntegrationTests
                 Name = "Popularity",
                 NumberOfSongs = 11,
                 ReleaseDate = "2006-01-01",
-                Type = "album"
+                Type = "album",
+                Images = new List<SpotifyImageObject>
+                {
+                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                }
             };
             var expected2 = new SpotifySimplifiedAlbumObject
             {
                 Name = "Cruel To Be Young",
                 NumberOfSongs = 12,
                 ReleaseDate = "2008-01-01",
-                Type = "album"
+                Type = "album",
+                Images = new List<SpotifyImageObject>
+                {
+                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100"},
+                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100"},
+                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
+                }
             };
             var expected3= new SpotifySimplifiedAlbumObject
             {
                 Name = "Sony Connect Set",
                 NumberOfSongs = 5,
                 ReleaseDate = "2007-01-01",
-                Type = "single"
+                Type = "single",
+                Images = new List<SpotifyImageObject>
+                {
+                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915"},
+                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915"},
+                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915"}
+                }
             };
             var expected4 = new SpotifySimplifiedAlbumObject
             {
                 Name = "Three Songs",
                 NumberOfSongs = 3,
                 ReleaseDate = "2006-01-01",
-                Type = "single"
+                Type = "single",
+                Images = new List<SpotifyImageObject>
+                {
+                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f"},
+                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f"},
+                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f"}
+                }
             };
             var expected = new List<SpotifySimplifiedAlbumObject> { expected1, expected2, expected3, expected4 };
             result.Should().BeEquivalentTo(expected);
@@ -70,7 +94,7 @@ namespace Albumify.Domain.IntegrationTests
                 Type = "album"
             };
             var expected = new List<SpotifySimplifiedAlbumObject> { expected1 };
-            result.Should().BeEquivalentTo(expected);
+            result.Should().BeEquivalentTo(expected, o => o.Excluding(e => e.Images));
         }
 
         [TestClass]
