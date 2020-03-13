@@ -47,7 +47,7 @@ namespace Albumify.Web.TagHelpers
             foreach (var (mediaCondition, image) in imagesWithMediaConditions)
                 sb.Append($"<source media='{mediaCondition}' srcset='{image.Path}'>");
             
-            sb.Append($"<img src='{imagesWithMediaConditions.Last().image.Path}' alt='{Alt}'>");
+            sb.Append($"<img class='img-fluid' src='{imagesWithMediaConditions.Last().image.Path}' alt='{Alt}'>");
             
             return sb.ToString();
         }
