@@ -58,7 +58,7 @@ namespace Albumify.Web.UnitTests
                 "<source media='(max-width: 299px)' srcset='https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656'>" +
                 "<source media='(max-width: 639px)' srcset='https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656'>" +
                 "<source media='(min-width: 640px)' srcset='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656'>" +
-                "<img src='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656' alt='Album Art'>";
+                "<img class='img-fluid' src='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656' alt='Album Art'>";
 
             _output.TagName.Should().Be("picture");
             _output.Content.GetContent().Should().Be(expected);
@@ -85,7 +85,7 @@ namespace Albumify.Web.UnitTests
             // Assert
             var expected =
                 "<source media='(min-width: 640px)' srcset='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656'>" +
-                "<img src='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656' alt='Album Art'>";
+                "<img class='img-fluid' src='https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656' alt='Album Art'>";
 
             _output.TagName.Should().Be("picture");
             _output.Content.GetContent().Should().Be(expected);
