@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
+using System.Net;
 
 namespace Albumify.Domain.Spotify
 {
@@ -36,7 +37,34 @@ namespace Albumify.Domain.Spotify
             response.EnsureSuccessStatusCode();
             var responseStream = response.Content.ReadAsStreamAsync();
             var searchResult = await JsonSerializer.DeserializeAsync<SpotifyFindAlbumsByArtistResult>(await responseStream);
-            return searchResult.PagingObject.Items;
+            return searchResult.Albums.Items;
+        }
+
+        public async Task<SpotifyAlbumObject> GetAlbumAsync(string spotifyAlbumId)
+        {
+            var accessToken = await _spotifyAuthorization.RequestAsync();
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(accessToken.TokenType, accessToken.AccessToken);
+
+            var encoded = WebUtility.HtmlEncode(spotifyAlbumId);
+            var url = $"https://api.spotify.com/v1/albums/{encoded}";
+            var response = await _httpClient.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseStream = response.Content.ReadAsStreamAsync();
+                var album = await JsonSerializer.DeserializeAsync<SpotifyAlbumObject>(await responseStream);
+                return album;
+            }
+            else
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                // TODO: error is not parsing correctly
+                var error = JsonSerializer.Deserialize<SpotifyRegularErrorObject>(responseString);
+                // Log error
+                return SpotifyAlbumObject.CreateForUnknownAlbum(spotifyAlbumId);
+            }
         }
     }
 }

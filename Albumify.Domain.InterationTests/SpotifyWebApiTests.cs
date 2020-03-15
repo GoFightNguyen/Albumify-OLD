@@ -2,6 +2,7 @@ using Albumify.Domain.Spotify;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace Albumify.Domain.IntegrationTests
 
             var expected1 = new SpotifySimplifiedAlbumObject
             {
+                Id = "3DYB0yIQYuOge2RjS7qHjs",
                 Name = "Popularity",
                 NumberOfSongs = 11,
                 ReleaseDate = "2006-01-01",
@@ -37,6 +39,7 @@ namespace Albumify.Domain.IntegrationTests
             };
             var expected2 = new SpotifySimplifiedAlbumObject
             {
+                Id = "13pS0hN39dSGi9jqWpPmmB",
                 Name = "Cruel To Be Young",
                 NumberOfSongs = 12,
                 ReleaseDate = "2008-01-01",
@@ -48,8 +51,9 @@ namespace Albumify.Domain.IntegrationTests
                     new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
                 }
             };
-            var expected3= new SpotifySimplifiedAlbumObject
+            var expected3 = new SpotifySimplifiedAlbumObject
             {
+                Id = "1yuFbCBPcqxhI25V7tjtkV",
                 Name = "Sony Connect Set",
                 NumberOfSongs = 5,
                 ReleaseDate = "2007-01-01",
@@ -63,6 +67,7 @@ namespace Albumify.Domain.IntegrationTests
             };
             var expected4 = new SpotifySimplifiedAlbumObject
             {
+                Id = "3fbdu3A3yIYwmBNvik2vLk",
                 Name = "Three Songs",
                 NumberOfSongs = 3,
                 ReleaseDate = "2006-01-01",
@@ -88,6 +93,7 @@ namespace Albumify.Domain.IntegrationTests
 
             var expected1 = new SpotifySimplifiedAlbumObject
             {
+                Id = "2xmmuAkHQv3slZzaJwFGmB",
                 Name = "A Fire So Big The Heavens Can See It",
                 NumberOfSongs = 10,
                 ReleaseDate = "2008-01-01",
@@ -635,5 +641,96 @@ namespace Albumify.Domain.IntegrationTests
   }
 }
          */
+    }
+
+    [TestClass]
+    public class TheSpotifyWebApi_WhenGettingASpecificAlbum
+    {
+        [TestMethod]
+        public async Task IsSuccessful_WithAFoundAlbum()
+        {
+            var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var result = await sut.GetAlbumAsync("3DYB0yIQYuOge2RjS7qHjs");
+            var expected = new SpotifyAlbumObject
+            {
+                Artists = new List<SpotifyArtistObject>
+                {
+                    new SpotifyArtistObject { Id = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" }
+                },
+                Id = "3DYB0yIQYuOge2RjS7qHjs",
+                Images = new List<SpotifyImageObject>
+                {
+                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                },
+                Label = "Tooth & Nail (TNN)",
+                Name = "Popularity",
+                ReleaseDate = "2006-01-01",
+                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>
+                {
+                    Items = new List<SpotifySimplifiedTrackObject>
+                    {
+                        new SpotifySimplifiedTrackObject { Name = "Welcome Home", Number = 1},
+                        new SpotifySimplifiedTrackObject { Name = "Get Ready (Hot Machete)", Number = 2},
+                        new SpotifySimplifiedTrackObject { Name = "Communicate", Number = 3},
+                        new SpotifySimplifiedTrackObject { Name = "Man In A 3K Suit", Number = 4},
+                        new SpotifySimplifiedTrackObject { Name = "Backstabber", Number = 5},
+                        new SpotifySimplifiedTrackObject { Name = "Popularity", Number = 6},
+                        new SpotifySimplifiedTrackObject { Name = "The Love That Carries Me", Number = 7},
+                        new SpotifySimplifiedTrackObject { Name = "The City We Live In", Number = 8},
+                        new SpotifySimplifiedTrackObject { Name = "Bringin' It Back Tonight... Everybody Start", Number = 9},
+                        new SpotifySimplifiedTrackObject { Name = "Burn It Down!", Number = 10},
+                        new SpotifySimplifiedTrackObject { Name = "Imagination", Number = 11}
+                    }
+                },
+                Type = "album",
+            };
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public async Task ReturnsUnknownAlbum_ForNonExistingId()
+        {
+            var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var result = await sut.GetAlbumAsync("NonExistingIdIsWhatIAm");
+            var expected = new SpotifyAlbumObject
+            {
+                Artists = new List<SpotifyArtistObject>(),
+                Id = "NonExistingIdIsWhatIAm",
+                Images = new List<SpotifyImageObject>(),
+                Label = "",
+                Name = "Unknown Album",
+                ReleaseDate = DateTime.Today.Date.ToString(),
+                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>(),
+                Type = "album"
+            };
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [TestMethod]
+        public async Task ReturnsUnknownAlbum_ForInvalidId()
+        {
+            var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var result = await sut.GetAlbumAsync("InvalidIdTooShort");
+            var expected = new SpotifyAlbumObject
+            {
+                Artists = new List<SpotifyArtistObject>(),
+                Id = "InvalidIdTooShort",
+                Images = new List<SpotifyImageObject>(),
+                Label = "",
+                Name = "Unknown Album",
+                ReleaseDate = DateTime.Today.Date.ToString(),
+                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>(),
+                Type = "album"
+            };
+
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }
