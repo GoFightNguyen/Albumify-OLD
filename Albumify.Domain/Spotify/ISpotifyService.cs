@@ -6,5 +6,6 @@ namespace Albumify.Domain.Spotify
     public interface ISpotifyService
     {
         Task<IEnumerable<SpotifySimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName);
+        Task<SpotifyAlbumObject> GetAlbumAsync(string spotifyAlbumId);
     }
 }

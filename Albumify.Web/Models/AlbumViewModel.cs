@@ -6,6 +6,8 @@ namespace Albumify.Web.Models
 {
     public class AlbumViewModel
     {
+        public string SpotifyId { get; set; }
+
         public string Name { get; set; }
 
         public string ReleaseDate { get; set; }
@@ -20,6 +22,7 @@ namespace Albumify.Web.Models
 
         public AlbumViewModel(SpotifySimplifiedAlbumObject album)
         {
+            SpotifyId = album.Id;
             Name = album.Name;
             ReleaseDate = album.ReleaseDate;
             NumberOfSongs = album.NumberOfSongs;
