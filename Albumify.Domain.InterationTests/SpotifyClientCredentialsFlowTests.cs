@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -17,14 +16,7 @@ namespace Albumify.Domain.IntegrationTests
             [TestMethod]
             public async Task WithAnInvalidClientId()
             {
-                var config = new ConfigurationBuilder()
-                .AddUserSecrets("Albumify")
-                .AddInMemoryCollection(new Dictionary<string, string>
-                {
-                    { "SpotifyClientId", "wrong" },
-                })
-                .Build();
-
+                var config = new TestingConfiguration().WithWrongSpotifyClientId().Build();
                 var thrownEx = await TryToAuthenticate(config);
 
                 Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client. " +
@@ -35,14 +27,7 @@ namespace Albumify.Domain.IntegrationTests
             [TestMethod]
             public async Task WithAnInvalidClientSecret()
             {
-                var config = new ConfigurationBuilder()
-                    .AddUserSecrets("Albumify")
-                    .AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "SpotifyClientSecret", "wrong" },
-                    })
-                    .Build();
-
+                var config = new TestingConfiguration().WithWrongSpotifyClientSecret().Build();
                 var thrownEx = await TryToAuthenticate(config);
 
                 Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client secret. " +
@@ -53,15 +38,10 @@ namespace Albumify.Domain.IntegrationTests
             [TestMethod]
             public async Task WithAnInvalidClientIdAndInvalidClientSecret()
             {
-                var config = new ConfigurationBuilder()
-                    .AddUserSecrets("Albumify")
-                    .AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "SpotifyClientId", "wrong" },
-                        { "SpotifyClientSecret", "alsoWrong" }
-                    })
+                var config = new TestingConfiguration()
+                    .WithWrongSpotifyClientId()
+                    .WithWrongSpotifyClientSecret()
                     .Build();
-
                 var thrownEx = await TryToAuthenticate(config);
 
                 Assert.AreEqual("Failed to authenticate with Spotify using Client Credentials Flow: Invalid client. " +
@@ -69,7 +49,7 @@ namespace Albumify.Domain.IntegrationTests
                     thrownEx.Message);
             }
 
-            private static async Task<Exception> TryToAuthenticate(IConfigurationRoot config)
+            private static async Task<Exception> TryToAuthenticate(IConfiguration config)
             {
                 Exception thrownEx = null;
                 try
@@ -95,7 +75,7 @@ namespace Albumify.Domain.IntegrationTests
             [TestMethod]
             public async Task WithValidCredentials()
             {
-                var config = new ConfigurationBuilder().AddUserSecrets("Albumify").Build();
+                var config = new TestingConfiguration().Build();
                 var sut = new SpotifyClientCredentialsFlow(config, new HttpClient());
                 var result = await sut.RequestAsync();
                 Assert.AreEqual(3600, result.ExpiresIn);

@@ -19,6 +19,12 @@ namespace Albumify.Domain.Spotify
             _spotifyAuthorization = spotifyAuthorization;
         }
 
+        /// <summary>
+        /// Search albums created by a specific artist. 
+        /// There is no guarantee of order because v1 of the Spotify API does not support ordering
+        /// </summary>
+        /// <param name="artistName">For multiword artist names, the words are matched in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
+        /// <returns></returns>
         public async Task<IEnumerable<SpotifySimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
@@ -40,6 +46,12 @@ namespace Albumify.Domain.Spotify
             return searchResult.Albums.Items;
         }
 
+        /// <summary>
+        /// Get a specific album given its unique Spotify Id. 
+        /// If no match is found, the null object pattern is followed.
+        /// </summary>
+        /// <param name="spotifyAlbumId"></param>
+        /// <returns></returns>
         public async Task<SpotifyAlbumObject> GetAlbumAsync(string spotifyAlbumId)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
@@ -60,8 +72,7 @@ namespace Albumify.Domain.Spotify
             else
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                // TODO: error is not parsing correctly
-                var error = JsonSerializer.Deserialize<SpotifyRegularErrorObject>(responseString);
+                var error = JsonSerializer.Deserialize<SpotifyUnsuccessfulResponse>(responseString);
                 // Log error
                 return SpotifyAlbumObject.CreateForUnknownAlbum(spotifyAlbumId);
             }
