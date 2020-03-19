@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Albumify.Web.UnitTests
 {
     [TestClass]
-    public class TheAlbumViewModel_WhenConvertingsFromASpotifySimplifiedAlbumObject
+    public class TheAlbumViewModel_WhenConvertingFromASpotifySimplifiedAlbumObject
     {
         [TestMethod]
         public void SetsImagesToEmpty_IfSourceImagesAreNull()
@@ -26,7 +26,7 @@ namespace Albumify.Web.UnitTests
         }
 
         [TestMethod]
-        public void ConvertsImages_IfSourceImagesAreEmpty()
+        public void ConvertsImages_IfSourceImagesExist()
         {
             var source = new SpotifySimplifiedAlbumObject
             {

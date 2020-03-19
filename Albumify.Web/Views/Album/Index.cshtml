@@ -1,0 +1,22 @@
+﻿@model Albumify.Web.Models.AlbumDetailsViewModel
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="col-xs-12 col-lg-3 col-xl-4">
+        <responsive-images images="@Model.Images" alt="@Model.ImagesAltText"></responsive-images>
+        <div style="text-align: center">
+            <span dir="auto">@Model.Name</span>
+            <p>@Model.ReleaseDate • @Model.NumberOfSongs SONGS</p>
+        </div>
+    </div>
+    <div class="col-xs-12 col-lg-9 col-xl-8">
+        <ul class="list-group">
+            @foreach (var track in Model.Tracks)
+            {
+                <li style="border:none; padding-top:0px" class="list-group-item">@track.Name</li>
+            }
+        </ul>
+    </div>
+</div>
