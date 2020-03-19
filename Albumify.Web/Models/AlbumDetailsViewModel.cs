@@ -10,6 +10,8 @@ namespace Albumify.Web.Models
 
         public string Name { get; set; }
 
+        public ArtistViewModel Artist { get; set; }
+
         public string ReleaseDate { get; set; }
 
         public int NumberOfSongs { get; set; }
@@ -28,6 +30,8 @@ namespace Albumify.Web.Models
             Name = album.Name;
             ReleaseDate = album.ReleaseDate.Substring(0, 4);    // should there by a SpotifyDate object?
             Type = album.Type;
+
+            Artist = new ArtistViewModel(album.Artists[0]);
 
             Images = album.Images == null ?
                 new List<ImageViewModel>() :

@@ -16,8 +16,22 @@ namespace Albumify.Web.UnitTests
                 Id = "3DYB0yIQYuOge2RjS7qHjs",
                 Label = "Albumify Tests",
                 Name = "Album",
-                ReleaseDate = "2019-03-18"
+                ReleaseDate = "2019-03-18",
+                Artists = new List<SpotifyArtistObject>
+                {
+                    new SpotifyArtistObject { Id = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" },
+                    new SpotifyArtistObject { Id = "MadeUp", Name = "Made Up" },
+                }
             };
+        }
+
+        [TestMethod]
+        public void CopiesFirstArtist()
+        {
+            var source = CreateSpotifyAlbum();
+            var result = new AlbumDetailsViewModel(source);
+            var expected = new ArtistViewModel { SpotifyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" };
+            result.Artist.Should().BeEquivalentTo(expected);
         }
 
         [TestMethod]
