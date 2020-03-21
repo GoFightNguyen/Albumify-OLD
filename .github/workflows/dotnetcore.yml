@@ -21,3 +21,8 @@ jobs:
       run: dotnet build --configuration Release
     - name: Unit Tests
       run: dotnet test --filter FullyQualifiedName~UnitTests
+    - name: Integration Tests
+      env:
+        SpotifyClientId: ${{ secrets.SpotifyClientId }}
+        SpotifyClientSecret: ${{ secrets.SpotifyClientSecret }}
+      run: dotnet test --filter FullyQualifiedName~IntegrationTests
