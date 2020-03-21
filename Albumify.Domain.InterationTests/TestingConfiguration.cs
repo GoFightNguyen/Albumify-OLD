@@ -23,6 +23,7 @@ namespace Albumify.Domain.IntegrationTests
         {
             return new ConfigurationBuilder()
                 .AddUserSecrets("Albumify")
+                .AddEnvironmentVariables()
                 .AddInMemoryCollection(OverriddenSettings)
                 .Build();
         }
