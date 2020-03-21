@@ -1,3 +1,5 @@
+![.NET Core](https://github.com/GoFightNguyen/Albumify/workflows/.NET%20Core/badge.svg)
+
 # Albumify
 I love music, and my favorite way to listen is by album.
 
