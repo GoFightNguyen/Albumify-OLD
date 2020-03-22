@@ -25,4 +25,9 @@ jobs:
         SpotifyClientSecret: ${{ secrets.SpotifyClientSecret }}
       run: dotnet test --filter FullyQualifiedName~IntegrationTests
     - name: Publish
-      run: dotnet publish Albumify.Web --configuration Release
+      run: dotnet publish Albumify.Web --configuration Release -o 'published-app'
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: 'published-app'
+        path: published-app
