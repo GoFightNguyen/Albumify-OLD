@@ -17,8 +17,6 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
     - name: Unit Tests
       run: dotnet test --filter FullyQualifiedName~UnitTests
     - name: Integration Tests
@@ -26,3 +24,5 @@ jobs:
         SpotifyClientId: ${{ secrets.SpotifyClientId }}
         SpotifyClientSecret: ${{ secrets.SpotifyClientSecret }}
       run: dotnet test --filter FullyQualifiedName~IntegrationTests
+    - name: Publish
+      run: dotnet publish Albumify.Web --configuration Release
