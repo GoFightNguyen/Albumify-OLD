@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  AZURE_WEBAPP_NAME: albumify-staging
+
 jobs:
   build:
 
@@ -24,8 +27,14 @@ jobs:
         SpotifyClientId: ${{ secrets.SpotifyClientId }}
         SpotifyClientSecret: ${{ secrets.SpotifyClientSecret }}
       run: dotnet test --filter FullyQualifiedName~IntegrationTests
-    - name: Publish
+    - name: dotnet publish
       run: dotnet publish Albumify.Web --configuration Release -o 'published-app'
+    - name: Deploy to Azure Web Apps using publish profile creds
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AzureWebAppPublishProfile }}
+        package: published-app
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
