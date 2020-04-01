@@ -39,7 +39,7 @@ jobs:
       run: dotnet test --filter FullyQualifiedName~IntegrationTests
 
     - name: Integration Tests - stop, and remove, container albumify-mongo
-      run: dotnet stop albumify-mongo
+      run: docker stop albumify-mongo
 
     - name: dotnet publish
       run: dotnet publish Albumify.Web --configuration Release -o 'published-app'
