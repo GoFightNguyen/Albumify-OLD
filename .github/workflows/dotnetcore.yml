@@ -22,6 +22,11 @@ jobs:
         dotnet-version: 3.1.101
     - name: Unit Tests
       run: dotnet test --filter FullyQualifiedName~UnitTests
+
+    - name: build image
+      run: docker build ./docker -t albumify-mongo
+    - name: start container
+      run: docker run --name albumify-mongo -p 27017:27017 --rm albumify-mongo
     - name: Integration Tests
       env:
         SpotifyClientId: ${{ secrets.SpotifyClientId }}
