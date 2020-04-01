@@ -26,7 +26,7 @@ jobs:
     - name: build image
       run: docker build ./docker -t albumify-mongo
     - name: start container
-      run: docker run --name albumify-mongo -p 27017:27017 --rm albumify-mongo
+      run: docker run --name albumify-mongo -p 27017:27017 --rm -d albumify-mongo
     - name: Integration Tests
       env:
         SpotifyClientId: ${{ secrets.SpotifyClientId }}
