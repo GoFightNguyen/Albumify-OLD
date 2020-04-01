@@ -1,0 +1,15 @@
+FROM mongo:4.2.3
+
+# These variables create a user in the admin database with the role of root.
+# This also causes the MongoDB to start with authentication enabled.
+# Log in as root: docker exec -it name-of-container -u 'i-am-root' -p 'i-am-root' --authenticationDatabase 'admin'
+ENV MONGO_INITDB_ROOT_USERNAME 'i-am-root'
+ENV MONGO_INITDB_ROOT_PASSWORD 'i-am-root'
+
+# This variable specifies the name of the database to be used for the creation scripts
+# in /docker-entrypoint-initdb.d
+ENV MONGO_INITDB_DATABASE 'albumify'
+
+COPY 001_CreateUser.js /docker-entrypoint-initdb.d
+
+# Log in as a user with readWrite on albumify: docker exec -it name-of-container -u 'albumify-user' -p 'albumify-password' --authenticationDatabase 'albumify'

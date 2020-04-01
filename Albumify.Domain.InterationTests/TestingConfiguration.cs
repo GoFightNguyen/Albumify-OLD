@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 
 namespace Albumify.Domain.IntegrationTests
@@ -19,9 +20,28 @@ namespace Albumify.Domain.IntegrationTests
             return this;
         }
 
+        public TestingConfiguration WithWrongMongoDbUsername()
+        {
+            OverriddenSettings.Add("MongoDBUsername", "wrongMongoDBUsername");
+            return this;
+        }
+
+        public TestingConfiguration WithWrongMongoDbPassword()
+        {
+            OverriddenSettings.Add("MongoDBPassword", "wrongMongoDBPassword");
+            return this;
+        }
+
+        public TestingConfiguration WithWrongMongoDbHost()
+        {
+            OverriddenSettings.Add("MongoDBHost", "wrongMongoDBHost");
+            return this;
+        }
+
         public IConfiguration Build()
         {
             return new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
                 .AddUserSecrets("Albumify")
                 .AddEnvironmentVariables()
                 .AddInMemoryCollection(OverriddenSettings)
