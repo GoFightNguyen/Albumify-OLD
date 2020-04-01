@@ -15,31 +15,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout repository code
+      uses: actions/checkout@v2
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Unit Tests
+
+    - name: Run unit tests
       run: dotnet test --filter FullyQualifiedName~UnitTests
 
-    - name: build image
+    - name: Integration Tests - Build image albumify-mongo
       run: docker build ./docker -t albumify-mongo
-    - name: start container
+
+    - name: Integration Tests - start container albumify-mongo
       run: docker run --name albumify-mongo -p 27017:27017 --rm -d albumify-mongo
-    - name: Integration Tests
+
+    - name: Integration Tests - run
       env:
         SpotifyClientId: ${{ secrets.SpotifyClientId }}
         SpotifyClientSecret: ${{ secrets.SpotifyClientSecret }}
       run: dotnet test --filter FullyQualifiedName~IntegrationTests
+
+    - name: Integration Tests - stop, and remove, container albumify-mongo
+      run: dotnet stop albumify-mongo
+
     - name: dotnet publish
       run: dotnet publish Albumify.Web --configuration Release -o 'published-app'
+
     - name: Deploy to Azure Web Apps using publish profile creds
       uses: Azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.AzureWebAppPublishProfile }}
         package: published-app
+
     - name: Upload artifact
       uses: actions/upload-artifact@v1
       with:
