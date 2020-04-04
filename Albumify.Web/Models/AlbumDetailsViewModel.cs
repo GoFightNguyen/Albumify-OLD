@@ -18,6 +18,8 @@ namespace Albumify.Web.Models
 
         public string Type { get; set; }
 
+        public string Label { get; set; }
+
         public List<ImageViewModel> Images { get; set; }
 
         public string ImagesAltText => $"Album art for {Name}";
@@ -27,6 +29,7 @@ namespace Albumify.Web.Models
         public AlbumDetailsViewModel(SpotifyAlbumObject album)
         {
             SpotifyId = album.Id;
+            Label = album.Label;
             Name = album.Name;
             ReleaseDate = album.ReleaseDate.Substring(0, 4);    // should there by a SpotifyDate object?
             Type = album.Type;
@@ -43,6 +46,11 @@ namespace Albumify.Web.Models
             Tracks = album.Tracks?.Items == null ?
                 new List<TrackViewModel>() :
                 album.Tracks.Items.Select(t => new TrackViewModel(t)).OrderBy(t => t.Number).ToList();
+        }
+
+        public AlbumDetailsViewModel()
+        {
+
         }
     }
 }

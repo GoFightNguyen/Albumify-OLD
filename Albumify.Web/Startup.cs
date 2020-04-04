@@ -1,3 +1,4 @@
+using Albumify.Domain;
 using Albumify.Domain.Spotify;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +27,11 @@ namespace Albumify.Web
             // By default, all clients created using IHttpClientFactory will record log messages for all requests
             services.AddHttpClient<ISpotifyAuthorization, SpotifyClientCredentialsFlow>();
             services.AddHttpClient<ISpotifyService, SpotifyWebApi>();
+
+            // Register as a singleton since it takes a direct dependency on MongoClient, which suggests
+            // MongoClient be registered in DI with a singleton service lifetime.
+            // https://mongodb.github.io/mongo-csharp-driver/2.8/reference/driver/connecting/#re-use
+            services.AddSingleton<MongoDbAlbumRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
