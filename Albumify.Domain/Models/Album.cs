@@ -13,6 +13,7 @@ namespace Albumify.Domain.Models
         public string ReleaseDate { get; set; }
         public string Type { get; set; }
         public int NumberOfSongs { get; set; }
-        public string SpotifyId { get; set; }
+        public string SpotifyId { get; set; }   //TODO: remove
+        public string ThirdPartyId { get; set; }
     }
 }
