@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Albumify.Web.Models;
 using Albumify.Domain;
-using Albumify.Domain.Models;
 
 namespace Albumify.Web.Controllers
 {
@@ -11,13 +10,11 @@ namespace Albumify.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AlbumifyService _albumifyService;
-        private readonly IMyCollectionRepository _myCollectionRepo;
 
-        public AlbumController(ILogger<HomeController> logger, AlbumifyService albumifyService, IMyCollectionRepository myCollectionRepo)
+        public AlbumController(ILogger<HomeController> logger, AlbumifyService albumifyService)
         {
             _logger = logger;
             _albumifyService = albumifyService;
-            _myCollectionRepo = myCollectionRepo;
         }
 
         public async Task<IActionResult> Index(string id)
@@ -31,18 +28,7 @@ namespace Albumify.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(AlbumDetailsViewModel viewModel)
         {
-            var album = new Album
-            {
-                Label = viewModel.Label,
-                Name = viewModel.Name,
-                ReleaseDate = viewModel.ReleaseDate,
-                ThirdPartyId = viewModel.ThirdPartyId,
-                Type = viewModel.Type
-            };
-            await _myCollectionRepo.AddAsync(album);
-
-            //return View("Index", viewModel);
-
+            await _albumifyService.AddAsync(viewModel.ThirdPartyId);
             return RedirectToAction("Index", "Album", new { id = viewModel.ThirdPartyId });
         }
     }

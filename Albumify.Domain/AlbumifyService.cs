@@ -36,7 +36,6 @@ namespace Albumify.Domain
         Task<Album> GetAlbumAsync(string spotifyAlbumId);
     }
 
-    // TODO: repo needs to implement
     public interface IMyCollectionRepository
     {
         Task<Album> AddAsync(Album album);
