@@ -69,11 +69,10 @@ namespace Albumify.Domain.IntegrationTests
             }
         }
 
-        [TestMethod]
-        public async Task SuccessfullyAdds_TheAlbum()
+        [TestClass]
+        public class AndSuccessful
         {
-            // Arrange
-            var album = new Album
+            private static readonly Album album = new Album
             {
                 Name = "Popularity",
                 Label = "Tooth & Nail (TNN)",
@@ -82,18 +81,34 @@ namespace Albumify.Domain.IntegrationTests
                 ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs"
             };
 
-            // Act            
-            var sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
-            var returnedAlbum = await sut.AddAsync(album);
-            var createdAlbum = await sut.GetAsync(album.Id);
+            private static MongoDbAlbumRepository _sut;
+            private static Album _returnedAlbum;
 
-            // Assert
-            returnedAlbum.Id.Should().NotBeNullOrWhiteSpace();
-            returnedAlbum.Should().BeEquivalentTo(album);
-            createdAlbum.Should().BeEquivalentTo(album);
+            [ClassInitialize]
+            public static async Task ClassInitialize(TestContext _)
+            {
+                _sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
+                _returnedAlbum = await _sut.AddAsync(album);
+            }
 
-            // Cleanup
-            await sut.RemoveAsync(album.Id);
+            [ClassCleanup]
+            public static async Task ClassCleanup()
+            {
+                await _sut.RemoveAsync(album.Id);
+            }
+
+            [TestMethod]
+            public void UpdatesTheIdOnTheAlbumPassedIn() => album.Id.Should().NotBeNullOrWhiteSpace();
+
+            [TestMethod]
+            public void ReturnsTheInsertedAlbum() => _returnedAlbum.Should().BeEquivalentTo(album);
+
+            [TestMethod]
+            public async Task TheAlbumIsInMongoDB()
+            {
+                var createdAlbum = await _sut.GetAsync(album.Id);
+                createdAlbum.Should().BeEquivalentTo(album);
+            }
         }
     }
 }

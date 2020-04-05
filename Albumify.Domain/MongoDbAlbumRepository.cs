@@ -1,5 +1,7 @@
 ﻿using Albumify.Domain.Models;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
@@ -13,12 +15,31 @@ namespace Albumify.Domain
 
         public MongoDbAlbumRepository(IConfiguration configuration)
         {
+            RegisterClassMapIfNotAlready();
+
             var username = configuration.GetValue<string>("MongoDBUsername");
             var password = configuration.GetValue<string>("MongoDBPassword");
-            
+
             var client = new MongoClient($"mongodb://{username}:{password}@{configuration.GetValue<string>("MongoDBHost")}/albumify");
             var db = client.GetDatabase("albumify");
             _albums = db.GetCollection<Album>("albums");
+        }
+
+        public static void RegisterClassMapIfNotAlready()
+        {
+            /* Registering class maps is expected to be a one time thing.
+             * If done multiple times, a System.ArgumentException is thrown: An item with the same key has already been added. Key: Albumify.Domain.Models.Album
+             *
+             * This issue did not present itself while running the app, but it did while running integration tests
+             */
+
+            if (BsonClassMap.IsClassMapRegistered(typeof(Album))) return;
+
+            BsonClassMap.RegisterClassMap<Album>(a =>
+            {
+                a.AutoMap();
+                a.MapMember(album => album.Id).SetIdGenerator(StringObjectIdGenerator.Instance);
+            });
         }
 
         public async Task<Album> AddAsync(Album album)
