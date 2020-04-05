@@ -36,14 +36,14 @@ namespace Albumify.Web.Controllers
                 Label = viewModel.Label,
                 Name = viewModel.Name,
                 ReleaseDate = viewModel.ReleaseDate,
-                ThirdPartyId = viewModel.SpotifyId,
+                ThirdPartyId = viewModel.ThirdPartyId,
                 Type = viewModel.Type
             };
             await _myCollectionRepo.AddAsync(album);
 
             //return View("Index", viewModel);
 
-            return RedirectToAction("Index", "Album", new { id = viewModel.SpotifyId });
+            return RedirectToAction("Index", "Album", new { id = viewModel.ThirdPartyId });
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Albumify.Web.UnitTests
 {
     [TestClass]
-    public class TheAlbumDetailsViewModel_WhenConvertingFromASpotifyAlbumObject
+    public class TheAlbumDetailsViewModel_WhenConvertingFromAlbumObject
     {
         public static Album CreateDomainAlbum()
         {
@@ -30,7 +30,7 @@ namespace Albumify.Web.UnitTests
         {
             var source = CreateDomainAlbum();
             var result = new AlbumDetailsViewModel(source);
-            var expected = new ArtistViewModel { SpotifyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" };
+            var expected = new ArtistViewModel { ThirdPartyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" };
             result.Artist.Should().BeEquivalentTo(expected);
         }
 

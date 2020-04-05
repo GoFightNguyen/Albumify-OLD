@@ -6,8 +6,7 @@ namespace Albumify.Web.Models
 {
     public class AlbumDetailsViewModel
     {
-        // TODO: rename to 3rdPartyId
-        public string SpotifyId { get; set; }
+        public string ThirdPartyId { get; set; }
 
         public string Name { get; set; }
 
@@ -29,7 +28,7 @@ namespace Albumify.Web.Models
 
         public AlbumDetailsViewModel(Album album)
         {
-            SpotifyId = album.ThirdPartyId;
+            ThirdPartyId = album.ThirdPartyId;
             Label = album.Label;
             Name = album.Name;
             ReleaseDate = album.ReleaseDate.Substring(0, 4);    // should there by a SpotifyDate object?
