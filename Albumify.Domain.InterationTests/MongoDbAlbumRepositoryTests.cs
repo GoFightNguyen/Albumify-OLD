@@ -84,10 +84,12 @@ namespace Albumify.Domain.IntegrationTests
 
             // Act            
             var sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
-            await sut.AddAsync(album);
+            var returnedAlbum = await sut.AddAsync(album);
             var createdAlbum = await sut.GetAsync(album.Id);
 
             // Assert
+            returnedAlbum.Id.Should().NotBeNullOrWhiteSpace();
+            returnedAlbum.Should().BeEquivalentTo(album);
             createdAlbum.Should().BeEquivalentTo(album);
 
             // Cleanup

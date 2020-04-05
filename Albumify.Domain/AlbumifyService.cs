@@ -17,12 +17,16 @@ namespace Albumify.Domain
             _myCollectionRepo = myCollectionRepository;
         }
 
-        public async Task<Album> AddAsync(string id)
+        public async Task<Album> GetAsync(string thirdPartyid)
+            => await _thirdPartyMusicService.GetAlbumAsync(thirdPartyid);
+
+        public async Task<Album> AddAsync(string thirdPartyId)
         {
+            // TODO: acceptance/integration tests
             // TODO: catch thrown errors here?
             // What if thirdPartMusicSerivce returns null or null object pattern
-            _logger.LogInformation("Use Case: Add album with 3rd party Id of {0}", id);
-            var albumToAdd = await _thirdPartyMusicService.GetAlbumAsync(id);
+            _logger.LogInformation("Use Case: Add album with 3rd party Id of {0}", thirdPartyId);
+            var albumToAdd = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
             return await _myCollectionRepo.AddAsync(albumToAdd);
         }
     }

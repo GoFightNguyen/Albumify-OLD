@@ -63,4 +63,43 @@ namespace Albumify.Domain.UnitTests
             return expected;
         }
     }
+
+    [TestClass]
+    public class TheAlbumifyService_WhenGettingAnAlbum
+    {
+        private const string ThirdPartyId = "test-album-id";
+        private readonly ILogger<AlbumifyService> logger = new Mock<ILogger<AlbumifyService>>().Object;
+
+        private Mock<I3rdPartyMusicService> thirdPartyMusicService;
+        private AlbumifyService sut;
+
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+            sut = new AlbumifyService(logger, thirdPartyMusicService.Object, null);
+        }
+
+        [TestMethod]
+        public async Task GetsTheAlbumFromTheThirdPartyMusicService()
+        {
+            await sut.GetAsync(ThirdPartyId);
+            thirdPartyMusicService.Verify(s => s.GetAlbumAsync(ThirdPartyId), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task ReturnsTheAlbum()
+        {
+            var expected = StubGettingAnAlbumFromThirdPartyMusicService();
+            var result = await sut.GetAsync(ThirdPartyId);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private Album StubGettingAnAlbumFromThirdPartyMusicService()
+        {
+            var thirdPartyMusicServiceAlbum = new Album { ThirdPartyId = ThirdPartyId };
+            thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(thirdPartyMusicServiceAlbum);
+            return thirdPartyMusicServiceAlbum;
+        }
+    }
 }

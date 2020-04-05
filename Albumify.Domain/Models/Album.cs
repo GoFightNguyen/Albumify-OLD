@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
 
 namespace Albumify.Domain.Models
 {
+    // TODO: separate MongoDB concern
     public class Album
     {
         [BsonId]
