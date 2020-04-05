@@ -1,5 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
 
 namespace Albumify.Domain.Models
 {
@@ -12,8 +14,30 @@ namespace Albumify.Domain.Models
         public string Label { get; set; }
         public string ReleaseDate { get; set; }
         public string Type { get; set; }
-        public int NumberOfSongs { get; set; }
-        public string SpotifyId { get; set; }   //TODO: remove
         public string ThirdPartyId { get; set; }
+        public List<Artist> Artists { get; set; } = new List<Artist>();
+        public List<Image> Images { get; set; } = new List<Image>();
+        public List<Track> Tracks { get; set; } = new List<Track>();
+
+        public int NumberOfSongs => Tracks.Count;
+    }
+
+    public class Artist
+    {
+        public string ThirdPartyId { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Image
+    {
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public string Url { get; set; }
+    }
+
+    public class Track
+    {
+        public string Name { get; set; }
+        public int Number { get; set; }
     }
 }

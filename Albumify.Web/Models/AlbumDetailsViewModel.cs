@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,6 +6,7 @@ namespace Albumify.Web.Models
 {
     public class AlbumDetailsViewModel
     {
+        // TODO: rename to 3rdPartyId
         public string SpotifyId { get; set; }
 
         public string Name { get; set; }
@@ -26,9 +27,9 @@ namespace Albumify.Web.Models
 
         public List<TrackViewModel> Tracks { get; set; }
 
-        public AlbumDetailsViewModel(SpotifyAlbumObject album)
+        public AlbumDetailsViewModel(Album album)
         {
-            SpotifyId = album.Id;
+            SpotifyId = album.ThirdPartyId;
             Label = album.Label;
             Name = album.Name;
             ReleaseDate = album.ReleaseDate.Substring(0, 4);    // should there by a SpotifyDate object?
@@ -40,17 +41,12 @@ namespace Albumify.Web.Models
                 new List<ImageViewModel>() :
                 album.Images.Select(a => new ImageViewModel(a)).ToList();
 
-            // should the tracks object take care of all these checks?
-            NumberOfSongs = album.Tracks?.Items?.Count() ?? 0;
-
-            Tracks = album.Tracks?.Items == null ?
-                new List<TrackViewModel>() :
-                album.Tracks.Items.Select(t => new TrackViewModel(t)).OrderBy(t => t.Number).ToList();
+            NumberOfSongs = album.Tracks.Count();
+            Tracks = album.Tracks.Select(t => new TrackViewModel(t)).OrderBy(t => t.Number).ToList();
         }
 
         public AlbumDetailsViewModel()
         {
-
         }
     }
 }

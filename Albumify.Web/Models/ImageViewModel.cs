@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Domain.Models;
 
 namespace Albumify.Web.Models
 {
@@ -12,7 +12,7 @@ namespace Albumify.Web.Models
 
         public ImageViewModel() { }
 
-        public ImageViewModel(SpotifyImageObject image)
+        public ImageViewModel(Image image)
         {
             Height = image.Height;
             Path = image.Url;

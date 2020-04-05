@@ -5,10 +5,11 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
+using Albumify.Domain.Models;
 
 namespace Albumify.Domain.Spotify
 {
-    public class SpotifyWebApi : ISpotifyService
+    public class SpotifyWebApi : ISpotifyService, I3rdPartyMusicService
     {
         private readonly HttpClient _httpClient;
         private readonly ISpotifyAuthorization _spotifyAuthorization;
@@ -52,7 +53,7 @@ namespace Albumify.Domain.Spotify
         /// </summary>
         /// <param name="spotifyAlbumId"></param>
         /// <returns></returns>
-        public async Task<SpotifyAlbumObject> GetAlbumAsync(string spotifyAlbumId)
+        public async Task<Album> GetAlbumAsync(string spotifyAlbumId)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
@@ -67,14 +68,15 @@ namespace Albumify.Domain.Spotify
             {
                 var responseStream = response.Content.ReadAsStreamAsync();
                 var album = await JsonSerializer.DeserializeAsync<SpotifyAlbumObject>(await responseStream);
-                return album;
+                return (Album)album;
             }
             else
             {
                 var responseString = await response.Content.ReadAsStringAsync();
                 var error = JsonSerializer.Deserialize<SpotifyUnsuccessfulResponse>(responseString);
-                // Log error
-                return SpotifyAlbumObject.CreateForUnknownAlbum(spotifyAlbumId);
+                // Log error as warning
+                var unknownAlbum = SpotifyAlbumObject.CreateForUnknownAlbum(spotifyAlbumId);
+                return (Album)unknownAlbum;
             }
         }
     }

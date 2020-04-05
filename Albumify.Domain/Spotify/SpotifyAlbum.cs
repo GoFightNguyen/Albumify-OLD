@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Albumify.Domain.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Albumify.Domain.Spotify
@@ -14,6 +16,14 @@ namespace Albumify.Domain.Spotify
 
         [JsonPropertyName("width")]
         public int Width { get; set; }
+
+        public static implicit operator Image(SpotifyImageObject spotifyImage)
+            => new Image
+            {
+                Height = spotifyImage.Height,
+                Url = spotifyImage.Url,
+                Width = spotifyImage.Width
+            };
     }
 
     public class SpotifySimplifiedAlbumObject
@@ -78,9 +88,30 @@ namespace Albumify.Domain.Spotify
                 ReleaseDate = DateTime.Today.Date.ToString(),
                 Artists = new List<SpotifyArtistObject>(),
                 Images = new List<SpotifyImageObject>(),
-                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>(),
+                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>
+                {
+                    Items = new List<SpotifySimplifiedTrackObject>()
+                },
                 Type = "album"
             };
+
+        public static explicit operator Album(SpotifyAlbumObject spotifyAlbum)
+        {
+            var artists = spotifyAlbum.Artists.ConvertAll(a => (Artist)a).ToList();
+            var images = spotifyAlbum.Images.ConvertAll(i => (Image)i).ToList();
+            var tracks = spotifyAlbum.Tracks.Items.ConvertAll(t => (Track)t).ToList();
+            return new Album
+            {
+                Artists = artists,
+                Images = images,
+                Label = spotifyAlbum.Label,
+                Name = spotifyAlbum.Name,
+                ReleaseDate = spotifyAlbum.ReleaseDate,
+                ThirdPartyId = spotifyAlbum.Id,
+                Tracks = tracks,
+                Type = spotifyAlbum.Type
+            };
+        }
     }
 
     public class SpotifyPagingObject<T>
@@ -96,6 +127,9 @@ namespace Albumify.Domain.Spotify
 
         [JsonPropertyName("track_number")]
         public int Number { get; set; }
+
+        public static implicit operator Track(SpotifySimplifiedTrackObject spotifyTrack)
+            => new Track { Name = spotifyTrack.Name, Number = spotifyTrack.Number };
     }
 
     public class SpotifyArtistObject
@@ -105,5 +139,8 @@ namespace Albumify.Domain.Spotify
 
         [JsonPropertyName("name")]
         public string Name { get; set; }
+
+        public static implicit operator Artist(SpotifyArtistObject spotifyArtist)
+            => new Artist { Name = spotifyArtist.Name, ThirdPartyId = spotifyArtist.Id };
     }
 }

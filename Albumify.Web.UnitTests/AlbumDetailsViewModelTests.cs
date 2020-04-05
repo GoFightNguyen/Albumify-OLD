@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Domain.Models;
 using Albumify.Web.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,18 +9,18 @@ namespace Albumify.Web.UnitTests
     [TestClass]
     public class TheAlbumDetailsViewModel_WhenConvertingFromASpotifyAlbumObject
     {
-        public static SpotifyAlbumObject CreateSpotifyAlbum()
+        public static Album CreateDomainAlbum()
         {
-            return new SpotifyAlbumObject
+            return new Album
             {
-                Id = "3DYB0yIQYuOge2RjS7qHjs",
+                ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs",
                 Label = "Albumify Tests",
                 Name = "Album",
                 ReleaseDate = "2019-03-18",
-                Artists = new List<SpotifyArtistObject>
+                Artists = new List<Artist>
                 {
-                    new SpotifyArtistObject { Id = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" },
-                    new SpotifyArtistObject { Id = "MadeUp", Name = "Made Up" },
+                    new Artist { ThirdPartyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" },
+                    new Artist { ThirdPartyId = "MadeUp", Name = "Made Up" },
                 }
             };
         }
@@ -28,39 +28,21 @@ namespace Albumify.Web.UnitTests
         [TestMethod]
         public void CopiesFirstArtist()
         {
-            var source = CreateSpotifyAlbum();
+            var source = CreateDomainAlbum();
             var result = new AlbumDetailsViewModel(source);
             var expected = new ArtistViewModel { SpotifyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" };
             result.Artist.Should().BeEquivalentTo(expected);
         }
 
         [TestMethod]
-        public void SetsImagesToEmpty_IfSourceImagesAreNull()
+        public void ConvertsImages()
         {
-            var source = CreateSpotifyAlbum();
-            source.Images = null;
-            var result = new AlbumDetailsViewModel(source);
-            result.Images.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void SetsImagesToEmpty_IfSourceImagesAreEmpty()
-        {
-            var source = CreateSpotifyAlbum();
-            source.Images = new List<SpotifyImageObject>();
-            var result = new AlbumDetailsViewModel(source);
-            result.Images.Should().BeEmpty();
-        }
-
-        [TestMethod]
-        public void ConvertsImages_IfSourceImagesExist()
-        {
-            var source = CreateSpotifyAlbum();
-            source.Images = new List<SpotifyImageObject>
+            var source = CreateDomainAlbum();
+            source.Images = new List<Image>
             {
-                new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
-                new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
-                new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                new Image {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                new Image {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                new Image {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
             };
             var result = new AlbumDetailsViewModel(source);
             var expected = new List<ImageViewModel>
@@ -73,46 +55,6 @@ namespace Albumify.Web.UnitTests
         }
 
         [TestClass]
-        public class IfSourceTracksAreNull
-        {
-            private static AlbumDetailsViewModel result;
-
-            [ClassInitialize]
-            public static void Initialize(TestContext _)
-            {
-                var source = CreateSpotifyAlbum();
-                source.Tracks = null;
-                result = new AlbumDetailsViewModel(source);
-            }
-
-            [TestMethod]
-            public void TracksAreEmpty() => result.Tracks.Should().BeEmpty();
-
-            [TestMethod]
-            public void NumberOfSongsIsZero() => result.NumberOfSongs.Should().Be(0);
-        }
-
-        [TestClass]
-        public class IfSourceTracksItemsIsNull
-        {
-            private static AlbumDetailsViewModel result;
-
-            [ClassInitialize]
-            public static void Initialize(TestContext _)
-            {
-                var source = CreateSpotifyAlbum();
-                source.Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>();
-                result = new AlbumDetailsViewModel(source);
-            }
-
-            [TestMethod]
-            public void TracksAreEmpty() => result.Tracks.Should().BeEmpty();
-
-            [TestMethod]
-            public void NumberOfSongsIsZero() => result.NumberOfSongs.Should().Be(0);
-        }
-
-        [TestClass]
         public class IfSourceTracksItemsIsEmpty
         {
             private static AlbumDetailsViewModel result;
@@ -120,8 +62,8 @@ namespace Albumify.Web.UnitTests
             [ClassInitialize]
             public static void Initialize(TestContext _)
             {
-                var source = CreateSpotifyAlbum();
-                source.Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject> { Items = new List<SpotifySimplifiedTrackObject>() };
+                var source = CreateDomainAlbum();
+                source.Tracks = new List<Track>();
                 result = new AlbumDetailsViewModel(source);
             }
 
@@ -140,15 +82,12 @@ namespace Albumify.Web.UnitTests
             [ClassInitialize]
             public static void Initialize(TestContext _)
             {
-                var source = CreateSpotifyAlbum();
-                source.Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>
+                var source = CreateDomainAlbum();
+                source.Tracks = new List<Track>
                 {
-                    Items = new List<SpotifySimplifiedTrackObject>
-                    {
-                        new SpotifySimplifiedTrackObject { Name = "Welcome Home", Number = 1},
-                        new SpotifySimplifiedTrackObject { Name = "Get Ready (Hot Machete)", Number = 2},
-                        new SpotifySimplifiedTrackObject { Name = "Communicate", Number = 3}
-                    }
+                    new Track { Name = "Welcome Home", Number = 1},
+                    new Track { Name = "Get Ready (Hot Machete)", Number = 2},
+                    new Track { Name = "Communicate", Number = 3}
                 };
                 result = new AlbumDetailsViewModel(source);
             }

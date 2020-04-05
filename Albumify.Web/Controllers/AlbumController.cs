@@ -11,20 +11,19 @@ namespace Albumify.Web.Controllers
     public class AlbumController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISpotifyService _spotifyMusicSource;
+        private readonly I3rdPartyMusicService _thirdPartyMusicService;
         private readonly MongoDbAlbumRepository _albumRepository;
 
-
-        public AlbumController(ILogger<HomeController> logger, ISpotifyService spotifyMusicSource, MongoDbAlbumRepository albumRepository)
+        public AlbumController(ILogger<HomeController> logger, I3rdPartyMusicService thirdPartyMusicService, MongoDbAlbumRepository albumRepository)
         {
             _logger = logger;
-            _spotifyMusicSource = spotifyMusicSource;
+            _thirdPartyMusicService = thirdPartyMusicService;
             _albumRepository = albumRepository;
         }
 
         public async Task<IActionResult> Index(string id)
         {
-            var album = await _spotifyMusicSource.GetAlbumAsync(id);
+            var album = await _thirdPartyMusicService.GetAlbumAsync(id);
             var viewModel = new AlbumDetailsViewModel(album);
             return View(viewModel);
         }
@@ -37,9 +36,8 @@ namespace Albumify.Web.Controllers
             {
                 Label = viewModel.Label,
                 Name = viewModel.Name,
-                NumberOfSongs = viewModel.NumberOfSongs,
                 ReleaseDate = viewModel.ReleaseDate,
-                SpotifyId = viewModel.SpotifyId,
+                ThirdPartyId = viewModel.SpotifyId,
                 Type = viewModel.Type
             };
             await _albumRepository.AddAsync(album);

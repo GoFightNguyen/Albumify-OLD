@@ -1,3 +1,4 @@
+using Albumify.Domain.Models;
 using Albumify.Domain.Spotify;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -653,7 +654,7 @@ namespace Albumify.Domain.IntegrationTests
     [TestClass]
     public class TheSpotifyWebApi_WhenGettingASpecificAlbum
     {
-        private static SpotifyWebApi sut;
+        private static I3rdPartyMusicService sut;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext _)
@@ -666,40 +667,37 @@ namespace Albumify.Domain.IntegrationTests
         public async Task ReturnsTheFoundAlbum()
         {
             var result = await sut.GetAlbumAsync("3DYB0yIQYuOge2RjS7qHjs");
-            var expected = new SpotifyAlbumObject
+            var expected = new Album
             {
-                Artists = new List<SpotifyArtistObject>
+                Artists = new List<Artist>
                 {
-                    new SpotifyArtistObject { Id = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" }
+                    new Artist { ThirdPartyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" }
                 },
-                Id = "3DYB0yIQYuOge2RjS7qHjs",
-                Images = new List<SpotifyImageObject>
+                ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs",
+                Images = new List<Image>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                    new Image {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                    new Image {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                    new Image {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
                 },
                 Label = "Tooth & Nail (TNN)",
                 Name = "Popularity",
                 ReleaseDate = "2006-01-01",
-                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>
+                Tracks = new List<Track>
                 {
-                    Items = new List<SpotifySimplifiedTrackObject>
-                    {
-                        new SpotifySimplifiedTrackObject { Name = "Welcome Home", Number = 1},
-                        new SpotifySimplifiedTrackObject { Name = "Get Ready (Hot Machete)", Number = 2},
-                        new SpotifySimplifiedTrackObject { Name = "Communicate", Number = 3},
-                        new SpotifySimplifiedTrackObject { Name = "Man In A 3K Suit", Number = 4},
-                        new SpotifySimplifiedTrackObject { Name = "Backstabber", Number = 5},
-                        new SpotifySimplifiedTrackObject { Name = "Popularity", Number = 6},
-                        new SpotifySimplifiedTrackObject { Name = "The Love That Carries Me", Number = 7},
-                        new SpotifySimplifiedTrackObject { Name = "The City We Live In", Number = 8},
-                        new SpotifySimplifiedTrackObject { Name = "Bringin' It Back Tonight... Everybody Start", Number = 9},
-                        new SpotifySimplifiedTrackObject { Name = "Burn It Down!", Number = 10},
-                        new SpotifySimplifiedTrackObject { Name = "Imagination", Number = 11}
-                    }
+                    new Track { Name = "Welcome Home", Number = 1},
+                    new Track { Name = "Get Ready (Hot Machete)", Number = 2},
+                    new Track { Name = "Communicate", Number = 3},
+                    new Track { Name = "Man In A 3K Suit", Number = 4},
+                    new Track { Name = "Backstabber", Number = 5},
+                    new Track { Name = "Popularity", Number = 6},
+                    new Track { Name = "The Love That Carries Me", Number = 7},
+                    new Track { Name = "The City We Live In", Number = 8},
+                    new Track { Name = "Bringin' It Back Tonight... Everybody Start", Number = 9},
+                    new Track { Name = "Burn It Down!", Number = 10},
+                    new Track { Name = "Imagination", Number = 11}
                 },
-                Type = "album",
+                Type = "album"
             };
 
             result.Should().BeEquivalentTo(expected);
@@ -709,18 +707,17 @@ namespace Albumify.Domain.IntegrationTests
         public async Task ReturnsUnknownAlbum_ForNonExistingId()
         {
             var result = await sut.GetAlbumAsync("NonExistingIdIsWhatIAm");
-            var expected = new SpotifyAlbumObject
+            var expected = new Album
             {
-                Artists = new List<SpotifyArtistObject>(),
-                Id = "NonExistingIdIsWhatIAm",
-                Images = new List<SpotifyImageObject>(),
+                Artists = new List<Artist>(),
+                Images = new List<Image>(),
                 Label = "",
                 Name = "Unknown Album",
                 ReleaseDate = DateTime.Today.Date.ToString(),
-                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>(),
+                ThirdPartyId = "NonExistingIdIsWhatIAm",
+                Tracks = new List<Track>(),
                 Type = "album"
             };
-
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -728,18 +725,17 @@ namespace Albumify.Domain.IntegrationTests
         public async Task ReturnsUnknownAlbum_ForInvalidId()
         {
             var result = await sut.GetAlbumAsync("InvalidIdTooShort");
-            var expected = new SpotifyAlbumObject
+            var expected = new Album
             {
-                Artists = new List<SpotifyArtistObject>(),
-                Id = "InvalidIdTooShort",
-                Images = new List<SpotifyImageObject>(),
+                Artists = new List<Artist>(),
+                Images = new List<Image>(),
                 Label = "",
                 Name = "Unknown Album",
                 ReleaseDate = DateTime.Today.Date.ToString(),
-                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>(),
+                ThirdPartyId = "InvalidIdTooShort",
+                Tracks = new List<Track>(),
                 Type = "album"
             };
-
             result.Should().BeEquivalentTo(expected);
         }
     }

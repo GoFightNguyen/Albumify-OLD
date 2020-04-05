@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Domain.Models;
 
 namespace Albumify.Web.Models
 {
@@ -9,10 +9,9 @@ namespace Albumify.Web.Models
 
         public TrackViewModel()
         {
-
         }
 
-        public TrackViewModel(SpotifySimplifiedTrackObject track)
+        public TrackViewModel(Track track)
         {
             Name = track.Name;
             Number = track.Number;

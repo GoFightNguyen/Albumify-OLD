@@ -1,17 +1,18 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Domain.Models;
 
 namespace Albumify.Web.Models
 {
     public class ArtistViewModel
     {
+        // TODO: rename to ThirdPartyId
         public string SpotifyId { get; set; }
         public string Name { get; set; }
 
         public ArtistViewModel() { }
 
-        public ArtistViewModel(SpotifyArtistObject artist)
+        public ArtistViewModel(Artist artist)
         {
-            SpotifyId = artist.Id;
+            SpotifyId = artist.ThirdPartyId;
             Name = artist.Name;
         }
     }

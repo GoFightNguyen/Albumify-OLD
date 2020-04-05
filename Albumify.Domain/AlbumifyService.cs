@@ -20,13 +20,13 @@ namespace Albumify.Domain
         public async Task<Album> AddAsync(string id)
         {
             // TODO: catch thrown errors here?
+            // What if thirdPartMusicSerivce returns null or null object pattern
             _logger.LogInformation("Use Case: Add album with 3rd party Id of {0}", id);
             var albumToAdd = await _thirdPartyMusicService.GetAlbumAsync(id);
             return await _myCollectionRepo.AddAsync(albumToAdd);
         }
     }
 
-    // TODO: spotify needs to implement
     public interface I3rdPartyMusicService
     {
         Task<Album> GetAlbumAsync(string spotifyAlbumId);

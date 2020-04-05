@@ -79,8 +79,7 @@ namespace Albumify.Domain.IntegrationTests
                 Label = "Tooth & Nail (TNN)",
                 ReleaseDate = "2006-01-01",
                 Type = "album",
-                NumberOfSongs = 11,
-                SpotifyId = "3DYB0yIQYuOge2RjS7qHjs"
+                ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs"
             };
 
             // Act            
