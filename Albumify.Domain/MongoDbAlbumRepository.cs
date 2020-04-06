@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Albumify.Domain
 {
-    // TODO: write majority
     public class MongoDbAlbumRepository : IMyCollectionRepository
     {
         private readonly IMongoCollection<Album> _albums;
@@ -17,10 +16,10 @@ namespace Albumify.Domain
         {
             RegisterClassMapIfNotAlready();
 
+            var hostScheme = configuration.GetValue<string>("MongoDBHostScheme");
             var username = configuration.GetValue<string>("MongoDBUsername");
             var password = configuration.GetValue<string>("MongoDBPassword");
-
-            var client = new MongoClient($"mongodb://{username}:{password}@{configuration.GetValue<string>("MongoDBHost")}/albumify");
+            var client = new MongoClient($"{hostScheme}://{username}:{password}@{configuration.GetValue<string>("MongoDBHost")}/albumify?retryWrites=true&w=majority");
             var db = client.GetDatabase("albumify");
             _albums = db.GetCollection<Album>("albums");
         }
