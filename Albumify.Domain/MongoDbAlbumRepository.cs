@@ -17,9 +17,10 @@ namespace Albumify.Domain
             RegisterClassMapIfNotAlready();
 
             var hostScheme = configuration.GetValue<string>("MongoDBHostScheme");
+            var host = configuration.GetValue<string>("MongoDBHost");
             var username = configuration.GetValue<string>("MongoDBUsername");
             var password = configuration.GetValue<string>("MongoDBPassword");
-            var client = new MongoClient($"{hostScheme}://{username}:{password}@{configuration.GetValue<string>("MongoDBHost")}/albumify?retryWrites=true&w=majority");
+            var client = new MongoClient($"{hostScheme}://{username}:{password}@{host}/albumify?retryWrites=true&w=majority");
             var db = client.GetDatabase("albumify");
             _albums = db.GetCollection<Album>("albums");
         }

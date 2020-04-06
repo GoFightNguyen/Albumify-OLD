@@ -17,7 +17,7 @@ namespace Albumify.Domain.Models
         public List<Image> Images { get; set; } = new List<Image>();
         public List<Track> Tracks { get; set; } = new List<Track>();
 
-        internal static Album CreateForUnknown(string thirdPartyId)
+        public static Album CreateForUnknown(string thirdPartyId)
             => new Album
             {
                 Artists = new List<Artist> { Artist.CreateForUnknown() },
