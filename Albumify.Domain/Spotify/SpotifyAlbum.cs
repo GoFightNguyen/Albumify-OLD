@@ -1,5 +1,4 @@
 ﻿using Albumify.Domain.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -79,22 +78,6 @@ namespace Albumify.Domain.Spotify
         [JsonPropertyName("artists")]
         public List<SpotifyArtistObject> Artists { get; set; }
 
-        internal static SpotifyAlbumObject CreateForUnknownAlbum(string id)
-            => new SpotifyAlbumObject
-            {
-                Id = id,
-                Label = "",
-                Name = "Unknown Album",
-                ReleaseDate = DateTime.Today.Date.ToString(),
-                Artists = new List<SpotifyArtistObject>(),
-                Images = new List<SpotifyImageObject>(),
-                Tracks = new SpotifyPagingObject<SpotifySimplifiedTrackObject>
-                {
-                    Items = new List<SpotifySimplifiedTrackObject>()
-                },
-                Type = "album"
-            };
-
         public static explicit operator Album(SpotifyAlbumObject spotifyAlbum)
         {
             var artists = spotifyAlbum.Artists.ConvertAll(a => (Artist)a).ToList();
@@ -128,7 +111,7 @@ namespace Albumify.Domain.Spotify
         [JsonPropertyName("track_number")]
         public int Number { get; set; }
 
-        public static implicit operator Track(SpotifySimplifiedTrackObject spotifyTrack)
+        public static explicit operator Track(SpotifySimplifiedTrackObject spotifyTrack)
             => new Track { Name = spotifyTrack.Name, Number = spotifyTrack.Number };
     }
 
@@ -140,7 +123,7 @@ namespace Albumify.Domain.Spotify
         [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        public static implicit operator Artist(SpotifyArtistObject spotifyArtist)
+        public static explicit operator Artist(SpotifyArtistObject spotifyArtist)
             => new Artist { Name = spotifyArtist.Name, ThirdPartyId = spotifyArtist.Id };
     }
 }

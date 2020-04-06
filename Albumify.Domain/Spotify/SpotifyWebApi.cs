@@ -48,8 +48,7 @@ namespace Albumify.Domain.Spotify
         }
 
         /// <summary>
-        /// Get a specific album given its unique Spotify Id. 
-        /// If no match is found, the null object pattern is followed.
+        /// Get a specific album given its unique Spotify Id.
         /// </summary>
         /// <param name="spotifyAlbumId"></param>
         /// <returns></returns>
@@ -75,8 +74,7 @@ namespace Albumify.Domain.Spotify
                 var responseString = await response.Content.ReadAsStringAsync();
                 var error = JsonSerializer.Deserialize<SpotifyUnsuccessfulResponse>(responseString);
                 // Log error as warning
-                var unknownAlbum = SpotifyAlbumObject.CreateForUnknownAlbum(spotifyAlbumId);
-                return (Album)unknownAlbum;
+                return Album.CreateForUnknown(spotifyAlbumId);
             }
         }
     }

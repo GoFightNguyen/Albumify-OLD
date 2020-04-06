@@ -24,7 +24,7 @@ namespace Albumify.Domain
         {
             // TODO: acceptance/integration tests
             // TODO: catch thrown errors here?
-            // What if thirdPartMusicSerivce returns null or null object pattern
+            // What if thirdPartMusicSerivce returns null object pattern
             _logger.LogInformation("Use Case: Add album with 3rd party Id of {0}", thirdPartyId);
             var albumToAdd = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
             return await _myCollectionRepo.AddAsync(albumToAdd);
@@ -33,6 +33,12 @@ namespace Albumify.Domain
 
     public interface I3rdPartyMusicService
     {
+        /// <summary>
+        /// Get a specific album given its unique Spotify Id. 
+        /// If the album is not found, then <see cref="Album.CreateForUnknown(spotifyAlbumId)"/> is returned.
+        /// </summary>
+        /// <param name="spotifyAlbumId"></param>
+        /// <returns></returns>
         Task<Album> GetAlbumAsync(string spotifyAlbumId);
     }
 

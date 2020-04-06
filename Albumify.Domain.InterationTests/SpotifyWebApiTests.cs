@@ -709,11 +709,12 @@ namespace Albumify.Domain.IntegrationTests
             var result = await sut.GetAlbumAsync("NonExistingIdIsWhatIAm");
             var expected = new Album
             {
-                Artists = new List<Artist>(),
+                Artists = new List<Artist> { new Artist { Name = "Unknown Artist", ThirdPartyId = "Unknown" } },
+                Id = Album.UnknownAlbumId,
                 Images = new List<Image>(),
                 Label = "",
                 Name = "Unknown Album",
-                ReleaseDate = DateTime.Today.Date.ToString(),
+                ReleaseDate = DateTime.Today.Date.ToString("yyyy-MM-dd"),
                 ThirdPartyId = "NonExistingIdIsWhatIAm",
                 Tracks = new List<Track>(),
                 Type = "album"
@@ -727,11 +728,12 @@ namespace Albumify.Domain.IntegrationTests
             var result = await sut.GetAlbumAsync("InvalidIdTooShort");
             var expected = new Album
             {
-                Artists = new List<Artist>(),
+                Artists = new List<Artist> { new Artist { Name = "Unknown Artist", ThirdPartyId = "Unknown" } },
+                Id = Album.UnknownAlbumId,
                 Images = new List<Image>(),
                 Label = "",
                 Name = "Unknown Album",
-                ReleaseDate = DateTime.Today.Date.ToString(),
+                ReleaseDate = DateTime.Today.Date.ToString("yyyy-MM-dd"),
                 ThirdPartyId = "InvalidIdTooShort",
                 Tracks = new List<Track>(),
                 Type = "album"
