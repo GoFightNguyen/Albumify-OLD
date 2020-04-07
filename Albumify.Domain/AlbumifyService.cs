@@ -24,17 +24,20 @@ namespace Albumify.Domain
         {
             _logger.LogInformation("Use Case - Add: 3rd party Id of {0}", thirdPartyId);
 
+            var album = await _myCollectionRepo.FindBy3rdPartyId(thirdPartyId);
+            if (!album.IsUnknown) return album;
+
             // TODO: acceptance/integration tests
             // TODO: catch thrown errors here?
-            var albumToAdd = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
 
-            if(albumToAdd.Id == Album.UnknownAlbumId)
+            album = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
+            if(album.IsUnknown)
             {
                 _logger.LogWarning("Use Case - Add: The 3rd party music service was unable to find an album with Id of {0}", thirdPartyId);
-                return albumToAdd;
+                return album;
             }
 
-            return await _myCollectionRepo.AddAsync(albumToAdd);
+            return await _myCollectionRepo.AddAsync(album);
         }
     }
 
@@ -52,5 +55,6 @@ namespace Albumify.Domain
     public interface IMyCollectionRepository
     {
         Task<Album> AddAsync(Album album);
+        Task<Album> FindBy3rdPartyId(string thirdPartyId);
     }
 }

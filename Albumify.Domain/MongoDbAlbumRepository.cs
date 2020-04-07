@@ -68,6 +68,11 @@ namespace Albumify.Domain
         {
             await _albums.DeleteOneAsync(a => a.Id == id);
         }
+
+        public async Task<Album> FindBy3rdPartyId(string thirdPartyId)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class AlbumRepositoryException : Exception

@@ -5,7 +5,7 @@ namespace Albumify.Domain.Models
 {
     public class Album
     {
-        public const string UnknownAlbumId = "Unknown-Album-Id";
+        private const string UnknownAlbumId = "Unknown-Album-Id";
 
         public string Id { get; set; }
         public string Name { get; set; }
@@ -16,6 +16,9 @@ namespace Albumify.Domain.Models
         public List<Artist> Artists { get; set; } = new List<Artist>();
         public List<Image> Images { get; set; } = new List<Image>();
         public List<Track> Tracks { get; set; } = new List<Track>();
+
+        // TODO: ensure this is not propagated to Mongo
+        public bool IsUnknown => Id == UnknownAlbumId;
 
         public static Album CreateForUnknown(string thirdPartyId)
             => new Album
