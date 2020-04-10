@@ -6,8 +6,9 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using System.Net;
+using Albumify.Domain.Spotify;
 
-namespace Albumify.Domain.Spotify
+namespace Albumify.Spotify
 {
     /// <summary>
     /// Authorize the app to access the Spotify Platform by using Spotify's Client Credentials Flow. 
@@ -31,7 +32,7 @@ namespace Albumify.Domain.Spotify
             _config = config;
             _httpClient = httpClient;
         }
-        
+
         public async Task<SpotifyAuthorizationResult> RequestAsync()
         {
             if (_authResult.IsValid) return _authResult;

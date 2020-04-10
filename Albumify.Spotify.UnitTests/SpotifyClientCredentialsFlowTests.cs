@@ -1,5 +1,4 @@
-﻿using Albumify.Domain.Spotify;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Moq.Protected;
@@ -10,13 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
+using Albumify.Domain.Spotify;
 
-namespace Albumify.Domain.UnitTests
+namespace Albumify.Spotify.UnitTests
 {
     [TestClass]
     public class TheSpotifyClientCredentialsFlow_WhenRequesting
     {
-        private static readonly SpotifyAuthorizationResult expected = 
+        private static readonly SpotifyAuthorizationResult expected =
             new SpotifyAuthorizationResult { AccessToken = "UnitTests", ExpiresIn = 3600, TokenType = "bearer" };
 
         [TestMethod]
@@ -82,5 +82,4 @@ namespace Albumify.Domain.UnitTests
             return httpMessageHandler;
         }
     }
-
 }

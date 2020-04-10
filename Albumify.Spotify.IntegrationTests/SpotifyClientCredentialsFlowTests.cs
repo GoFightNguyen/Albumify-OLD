@@ -1,11 +1,11 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Spotify;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Albumify.Domain.IntegrationTests
+namespace Albumify.Spotify.IntegrationTests
 {
     [TestClass]
     public class TheSpotifyClientCredentialsFlow_WhenRequesting

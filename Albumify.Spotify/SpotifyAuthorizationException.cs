@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Albumify.Domain.Spotify
+namespace Albumify.Spotify
 {
     public class SpotifyAuthorizationException : Exception
     {
