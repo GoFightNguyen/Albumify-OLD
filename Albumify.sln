@@ -16,7 +16,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Domain.Integration
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Domain.UnitTests", "Albumify.Domain.UnitTests\Albumify.Domain.UnitTests.csproj", "{F763858D-E209-46BD-940A-12C09234A824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albumify.Web.UnitTests", "Albumify.Web.UnitTests\Albumify.Web.UnitTests.csproj", "{92BFAE78-1330-4337-B69D-85324B2609FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Web.UnitTests", "Albumify.Web.UnitTests\Albumify.Web.UnitTests.csproj", "{92BFAE78-1330-4337-B69D-85324B2609FD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InterfaceAdapters", "InterfaceAdapters", "{FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albumify.MongoDB", "Albumify.MongoDB\Albumify.MongoDB.csproj", "{CDD25D91-9091-4BC9-93F6-6AC049BB5736}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -88,9 +92,24 @@ Global
 		{92BFAE78-1330-4337-B69D-85324B2609FD}.Release|x64.Build.0 = Release|Any CPU
 		{92BFAE78-1330-4337-B69D-85324B2609FD}.Release|x86.ActiveCfg = Release|Any CPU
 		{92BFAE78-1330-4337-B69D-85324B2609FD}.Release|x86.Build.0 = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|x64.Build.0 = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Debug|x86.Build.0 = Debug|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x64.ActiveCfg = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x64.Build.0 = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x86.ActiveCfg = Release|Any CPU
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CDD25D91-9091-4BC9-93F6-6AC049BB5736} = {FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E908497D-5B1B-4A0D-8901-511224E02E83}

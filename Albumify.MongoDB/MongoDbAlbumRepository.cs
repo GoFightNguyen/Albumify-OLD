@@ -1,4 +1,5 @@
-﻿using Albumify.Domain.Models;
+﻿using Albumify.Domain;
+using Albumify.Domain.Models;
 using Microsoft.Extensions.Configuration;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
@@ -6,7 +7,7 @@ using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
 
-namespace Albumify.Domain
+namespace Albumify.MongoDB
 {
     public class MongoDbAlbumRepository : IMyCollectionRepository
     {
@@ -20,7 +21,17 @@ namespace Albumify.Domain
             var host = configuration.GetValue<string>("MongoDBHost");
             var username = configuration.GetValue<string>("MongoDBUsername");
             var password = configuration.GetValue<string>("MongoDBPassword");
-            var client = new MongoClient($"{hostScheme}://{username}:{password}@{host}/albumify?retryWrites=true&w=majority");
+
+            MongoClient client;
+            try
+            {
+                client = new MongoClient($"{hostScheme}://{username}:{password}@{host}/albumify?retryWrites=true&w=majority");
+            }
+            catch (MongoConfigurationException ex)
+            {
+                throw new AlbumRepositoryException("Failed to connect to MongoDB. Please verify the configuration for MongoDBHostScheme", ex);
+            }
+
             var db = client.GetDatabase("albumify");
             _albums = db.GetCollection<Album>("albums");
         }
@@ -51,11 +62,11 @@ namespace Albumify.Domain
             }
             catch (MongoAuthenticationException ex)
             {
-                throw new AlbumRepositoryException("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBHost, MongoDBUsername, and MongoDBPassword", ex);
+                throw new AlbumRepositoryException("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBUsername and MongoDBPassword", ex);
             }
             catch (TimeoutException ex)
             {
-                throw new AlbumRepositoryException("Failed to connect to MongoDB because of a timeout. Please verify the configuration for MongoDBHost, MongoDBUsername, and MongoDBPassword", ex);
+                throw new AlbumRepositoryException("Failed to connect to MongoDB because of a timeout. Please verify the configuration for MongoDBHost", ex);
             }
         }
 
@@ -76,6 +87,7 @@ namespace Albumify.Domain
         }
     }
 
+    // TODO: rename, does this belong in domain?
     public class AlbumRepositoryException : Exception
     {
         public AlbumRepositoryException(string message, Exception innerException) : base(message, innerException)

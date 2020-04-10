@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Albumify.Domain\Albumify.Domain.csproj" />
+    <ProjectReference Include="..\Albumify.MongoDB\Albumify.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
 
 namespace Albumify.Domain.IntegrationTests
@@ -35,6 +34,12 @@ namespace Albumify.Domain.IntegrationTests
         public TestingConfiguration WithWrongMongoDbHost()
         {
             OverriddenSettings.Add("MongoDBHost", "wrongMongoDBHost");
+            return this;
+        }
+
+        public TestingConfiguration WithWrongMongoDbHostScheme()
+        {
+            OverriddenSettings.Add("MongoDBHostScheme", "wrongMongoDBHostScheme");
             return this;
         }
 

@@ -1,7 +1,9 @@
 ﻿using Albumify.Domain.Models;
+using Albumify.MongoDB;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
 
@@ -21,8 +23,8 @@ namespace Albumify.Domain.IntegrationTests
                     .Build();
                 var thrownEx = await TryToAddAlbum(config);
 
-                thrownEx.Message.Should().Be("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBHost, MongoDBUsername, and MongoDBPassword");
-                thrownEx.InnerException.Should().BeOfType<MongoDB.Driver.MongoAuthenticationException>();
+                thrownEx.Message.Should().Be("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBUsername and MongoDBPassword");
+                thrownEx.InnerException.Should().BeOfType<MongoAuthenticationException>();
             }
 
             [TestMethod]
@@ -33,8 +35,8 @@ namespace Albumify.Domain.IntegrationTests
                     .Build();
                 var thrownEx = await TryToAddAlbum(config);
 
-                thrownEx.Message.Should().Be("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBHost, MongoDBUsername, and MongoDBPassword");
-                thrownEx.InnerException.Should().BeOfType<MongoDB.Driver.MongoAuthenticationException>();
+                thrownEx.Message.Should().Be("Failed to authenticate with MongoDB. Please verify the configuration for MongoDBUsername and MongoDBPassword");
+                thrownEx.InnerException.Should().BeOfType<MongoAuthenticationException>();
             }
 
             [TestMethod]
@@ -46,8 +48,21 @@ namespace Albumify.Domain.IntegrationTests
                 var thrownEx = await TryToAddAlbum(config);
 
                 thrownEx.Should().NotBeNull();
-                thrownEx.Message.Should().Be("Failed to connect to MongoDB because of a timeout. Please verify the configuration for MongoDBHost, MongoDBUsername, and MongoDBPassword");
+                thrownEx.Message.Should().Be("Failed to connect to MongoDB because of a timeout. Please verify the configuration for MongoDBHost");
                 thrownEx.InnerException.Should().BeOfType<TimeoutException>();
+            }
+
+            [TestMethod]
+            public async Task ForAnInvalidHostScheme()
+            {
+                var config = new TestingConfiguration()
+                    .WithWrongMongoDbHostScheme()
+                    .Build();
+                var thrownEx = await TryToAddAlbum(config);
+
+                thrownEx.Should().NotBeNull();
+                thrownEx.Message.Should().Be("Failed to connect to MongoDB. Please verify the configuration for MongoDBHostScheme");
+                thrownEx.InnerException.Should().BeOfType<MongoConfigurationException>();
             }
 
             private static async Task<Exception> TryToAddAlbum(IConfiguration config)

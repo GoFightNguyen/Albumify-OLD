@@ -1,5 +1,6 @@
 using Albumify.Domain;
 using Albumify.Domain.Spotify;
+using Albumify.MongoDB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
