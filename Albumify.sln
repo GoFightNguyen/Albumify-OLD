@@ -20,7 +20,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Web.UnitTests", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InterfaceAdapters", "InterfaceAdapters", "{FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albumify.MongoDB", "Albumify.MongoDB\Albumify.MongoDB.csproj", "{CDD25D91-9091-4BC9-93F6-6AC049BB5736}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.MongoDB", "Albumify.MongoDB\Albumify.MongoDB.csproj", "{CDD25D91-9091-4BC9-93F6-6AC049BB5736}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7D01B412-C79B-4E3B-8884-0F03C0AD56B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albumify.MongoDB.IntegrationTests", "Albumify.MongoDB.IntegrationTests\Albumify.MongoDB.IntegrationTests.csproj", "{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,12 +108,25 @@ Global
 		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x64.Build.0 = Release|Any CPU
 		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x86.ActiveCfg = Release|Any CPU
 		{CDD25D91-9091-4BC9-93F6-6AC049BB5736}.Release|x86.Build.0 = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|x64.Build.0 = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Debug|x86.Build.0 = Debug|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|x64.ActiveCfg = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|x64.Build.0 = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|x86.ActiveCfg = Release|Any CPU
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CDD25D91-9091-4BC9-93F6-6AC049BB5736} = {FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}
+		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4} = {7D01B412-C79B-4E3B-8884-0F03C0AD56B3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E908497D-5B1B-4A0D-8901-511224E02E83}

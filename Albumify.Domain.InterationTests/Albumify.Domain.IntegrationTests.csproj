@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.2" />
@@ -25,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Albumify.Domain\Albumify.Domain.csproj" />
-    <ProjectReference Include="..\Albumify.MongoDB\Albumify.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>

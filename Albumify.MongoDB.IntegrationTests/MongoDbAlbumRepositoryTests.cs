@@ -1,5 +1,4 @@
 ﻿using Albumify.Domain.Models;
-using Albumify.MongoDB;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -7,7 +6,7 @@ using MongoDB.Driver;
 using System;
 using System.Threading.Tasks;
 
-namespace Albumify.Domain.IntegrationTests
+namespace Albumify.MongoDB.IntegrationTests
 {
     [TestClass]
     public class TheMongoDbAlbumRepository_WhenAddingAnAlbum
