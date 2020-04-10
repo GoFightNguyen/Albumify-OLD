@@ -111,4 +111,47 @@ namespace Albumify.Domain.IntegrationTests
             }
         }
     }
+
+    [TestClass]
+    public class TheMongoDbAlbumRepository_FindBy3rdPartyId
+    {
+        private const string ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs";
+        private static readonly Album album = new Album
+        {
+            Name = "Popularity",
+            Label = "Tooth & Nail (TNN)",
+            ReleaseDate = "2006-01-01",
+            Type = "album",
+            ThirdPartyId = ThirdPartyId
+        };
+
+        private static MongoDbAlbumRepository _sut;
+
+        [ClassInitialize]
+        public static async Task ClassInitialize(TestContext _)
+        {
+            _sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
+            await _sut.AddAsync(album);
+        }
+
+        [ClassCleanup]
+        public static async Task ClassCleanup()
+        {
+            await _sut.RemoveAsync(album.Id);
+        }
+
+        [TestMethod]
+        public async Task ReturnsUnknownAlbum_WhenNotFound()
+        {
+            var result = await _sut.FindBy3rdPartyId("UnknownThirdPartyId");
+            result.Should().BeEquivalentTo(Album.CreateForUnknown("UnknownThirdPartyId"));
+        }
+
+        [TestMethod]
+        public async Task ReturnsMatchingAlbum()
+        {
+            var result = await _sut.FindBy3rdPartyId(ThirdPartyId);
+            result.Should().BeEquivalentTo(album);
+        }
+    }
 }

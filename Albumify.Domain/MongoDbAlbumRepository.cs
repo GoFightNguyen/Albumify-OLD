@@ -71,7 +71,8 @@ namespace Albumify.Domain
 
         public async Task<Album> FindBy3rdPartyId(string thirdPartyId)
         {
-            throw new NotImplementedException();
+            var album = await _albums.Find(a => a.ThirdPartyId == thirdPartyId).SingleOrDefaultAsync();
+            return album ?? Album.CreateForUnknown(thirdPartyId);
         }
     }
 

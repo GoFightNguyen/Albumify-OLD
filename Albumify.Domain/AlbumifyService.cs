@@ -44,17 +44,23 @@ namespace Albumify.Domain
     public interface I3rdPartyMusicService
     {
         /// <summary>
-        /// Get a specific album given its unique Spotify Id. 
-        /// If the album is not found, then <see cref="Album.CreateForUnknown(spotifyAlbumId)"/> is returned.
+        /// Get a specific album given its unique Third-Party Id.
+        /// If the album is not found, then <see cref="Album.CreateForUnknown(thirdpartyId)"/> is returned.
         /// </summary>
-        /// <param name="spotifyAlbumId"></param>
+        /// <param name="thirdPartyId"></param>
         /// <returns></returns>
-        Task<Album> GetAlbumAsync(string spotifyAlbumId);
+        Task<Album> GetAlbumAsync(string thirdPartyId);
     }
 
     public interface IMyCollectionRepository
     {
         Task<Album> AddAsync(Album album);
+        /// <summary>
+        /// Get a specific album given its unique Third-Party Id.
+        /// If the album is not found, then <see cref="Album.CreateForUnknown(thirdpartyId)"/> is returned.
+        /// </summary>
+        /// <param name="thirdPartyId"></param>
+        /// <returns></returns>
         Task<Album> FindBy3rdPartyId(string thirdPartyId);
     }
 }

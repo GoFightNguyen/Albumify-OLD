@@ -5,7 +5,7 @@ namespace Albumify.Domain.Models
 {
     public class Album
     {
-        private const string UnknownAlbumId = "Unknown-Album-Id";
+        public const string UnknownAlbumId = "Unknown-Album-Id";
 
         public string Id { get; set; }
         public string Name { get; set; }
