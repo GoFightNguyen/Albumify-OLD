@@ -2,13 +2,13 @@
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifyUnsuccessfulResponse
+    public class UnsuccessfulResponse
     {
         [JsonPropertyName("error")]
-        public SpotifyRegularErrorObject Error { get; set; }
+        public RegularErrorObject Error { get; set; }
     }
 
-    public class SpotifyRegularErrorObject
+    public class RegularErrorObject
     {
         [JsonPropertyName("status")]
         public int Status { get; set; }

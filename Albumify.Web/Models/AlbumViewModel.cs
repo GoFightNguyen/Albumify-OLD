@@ -20,7 +20,7 @@ namespace Albumify.Web.Models
 
         public string ImagesAltText => $"Album art for {Name}";
 
-        public AlbumViewModel(SpotifySimplifiedAlbumObject album)
+        public AlbumViewModel(SimplifiedAlbumObject album)
         {
             SpotifyId = album.Id;
             Name = album.Name;

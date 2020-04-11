@@ -2,7 +2,7 @@
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifyAuthorizationError
+    public class AuthenticationErrorObject
     {
         [JsonPropertyName("error")]
         public string Error { get; set; }

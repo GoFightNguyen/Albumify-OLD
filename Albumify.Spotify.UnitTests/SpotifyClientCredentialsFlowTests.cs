@@ -16,8 +16,8 @@ namespace Albumify.Spotify.UnitTests
     [TestClass]
     public class TheSpotifyClientCredentialsFlow_WhenRequesting
     {
-        private static readonly SpotifyAuthorizationResult expected =
-            new SpotifyAuthorizationResult { AccessToken = "UnitTests", ExpiresIn = 3600, TokenType = "bearer" };
+        private static readonly AuthenticationObject expected =
+            new AuthenticationObject { AccessToken = "UnitTests", ExpiresIn = 3600, TokenType = "bearer" };
 
         [TestMethod]
         public async Task AuthorizesWithSpotify_IfNotAuthorized()
@@ -64,7 +64,7 @@ namespace Albumify.Spotify.UnitTests
                 })
                 .Build();
 
-        private static Mock<HttpMessageHandler> StubHttpCallForAuthorizationToReturn(SpotifyAuthorizationResult expected)
+        private static Mock<HttpMessageHandler> StubHttpCallForAuthorizationToReturn(AuthenticationObject expected)
         {
             var httpMessageHandler = new Mock<HttpMessageHandler>();
             httpMessageHandler

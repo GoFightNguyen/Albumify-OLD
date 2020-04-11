@@ -25,7 +25,7 @@ namespace Albumify.Spotify
         private readonly IConfiguration _config;
         private readonly HttpClient _httpClient;
 
-        private SpotifyAuthorizationResult _authResult = new SpotifyAuthorizationResult();
+        private AuthenticationObject _authResult = new AuthenticationObject();
 
         public SpotifyClientCredentialsFlow(IConfiguration config, HttpClient httpClient)
         {
@@ -33,7 +33,7 @@ namespace Albumify.Spotify
             _httpClient = httpClient;
         }
 
-        public async Task<SpotifyAuthorizationResult> RequestAsync()
+        public async Task<AuthenticationObject> RequestAsync()
         {
             if (_authResult.IsValid) return _authResult;
 
@@ -52,12 +52,12 @@ namespace Albumify.Spotify
                  * Example body: "{"error":"invalid_client","error_description":"Invalid client secret"}"
                 */
                 var responseString = await response.Content.ReadAsStringAsync();
-                var authenticationError = JsonSerializer.Deserialize<SpotifyAuthorizationError>(responseString);
+                var authenticationError = JsonSerializer.Deserialize<AuthenticationErrorObject>(responseString);
                 throw new SpotifyAuthorizationException(authenticationError);
             }
 
             var responseStream = response.Content.ReadAsStreamAsync();
-            var spotifyAuthenticationResult = await JsonSerializer.DeserializeAsync<SpotifyAuthorizationResult>(await responseStream);
+            var spotifyAuthenticationResult = await JsonSerializer.DeserializeAsync<AuthenticationObject>(await responseStream);
 
             _authResult = spotifyAuthenticationResult;
             return spotifyAuthenticationResult;

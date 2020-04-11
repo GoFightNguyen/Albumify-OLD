@@ -7,6 +7,6 @@ namespace Albumify.Spotify
     // TODO: remove by making functionality part of the domain interface
     public interface ISpotifyService
     {
-        Task<IEnumerable<SpotifySimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName);
+        Task<IEnumerable<SimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName);
     }
 }

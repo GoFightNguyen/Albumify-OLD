@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifySimplifiedAlbumObject
+    public class SimplifiedAlbumObject
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
@@ -21,6 +21,6 @@ namespace Albumify.Spotify.Models
         public string Type { get; set; }
 
         [JsonPropertyName("images")]
-        public List<SpotifyImageObject> Images { get; set; }
+        public List<ImageObject> Images { get; set; }
     }
 }

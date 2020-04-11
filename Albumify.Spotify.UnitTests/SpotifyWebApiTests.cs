@@ -37,7 +37,7 @@ namespace Albumify.Spotify.UnitTests
             var spotifyAuthorization = new Mock<ISpotifyAuthorization>();
             spotifyAuthorization
                 .Setup(a => a.RequestAsync())
-                .ReturnsAsync(new SpotifyAuthorizationResult { AccessToken = "UnitTests", ExpiresIn = 3600, TokenType = "bearer" });
+                .ReturnsAsync(new AuthenticationObject { AccessToken = "UnitTests", ExpiresIn = 3600, TokenType = "bearer" });
             return spotifyAuthorization.Object;
         }
 

@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifySimplifiedTrackObject
+    public class SimplifiedTrackObject
     {
         [JsonPropertyName("name")]
         public string Name { get; set; }
@@ -11,7 +11,7 @@ namespace Albumify.Spotify.Models
         [JsonPropertyName("track_number")]
         public int Number { get; set; }
 
-        public static explicit operator Track(SpotifySimplifiedTrackObject spotifyTrack)
+        public static explicit operator Track(SimplifiedTrackObject spotifyTrack)
             => new Track { Name = spotifyTrack.Name, Number = spotifyTrack.Number };
     }
 }

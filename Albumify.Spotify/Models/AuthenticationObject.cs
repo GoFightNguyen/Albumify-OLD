@@ -2,7 +2,7 @@
 
 namespace Albumify.Spotify.Models
 {
-    public struct SpotifyAuthorizationResult
+    public struct AuthenticationObject
     {
         [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }

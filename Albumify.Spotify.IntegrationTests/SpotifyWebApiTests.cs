@@ -33,63 +33,63 @@ namespace Albumify.Spotify.IntegrationTests
             {
                 var result = await sut.FindAlbumsByArtistAsync("Jonezetta");
 
-                var expected1 = new SpotifySimplifiedAlbumObject
+                var expected1 = new SimplifiedAlbumObject
                 {
                     Id = "3DYB0yIQYuOge2RjS7qHjs",
                     Name = "Popularity",
                     NumberOfSongs = 11,
                     ReleaseDate = "2006-01-01",
                     Type = "album",
-                    Images = new List<SpotifyImageObject>
+                    Images = new List<ImageObject>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
                 }
                 };
-                var expected2 = new SpotifySimplifiedAlbumObject
+                var expected2 = new SimplifiedAlbumObject
                 {
                     Id = "13pS0hN39dSGi9jqWpPmmB",
                     Name = "Cruel To Be Young",
                     NumberOfSongs = 12,
                     ReleaseDate = "2008-01-01",
                     Type = "album",
-                    Images = new List<SpotifyImageObject>
+                    Images = new List<ImageObject>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
+                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100"},
+                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100"},
+                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
                 }
                 };
-                var expected3 = new SpotifySimplifiedAlbumObject
+                var expected3 = new SimplifiedAlbumObject
                 {
                     Id = "1yuFbCBPcqxhI25V7tjtkV",
                     Name = "Sony Connect Set",
                     NumberOfSongs = 5,
                     ReleaseDate = "2007-01-01",
                     Type = "single",
-                    Images = new List<SpotifyImageObject>
+                    Images = new List<ImageObject>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915"}
+                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915"},
+                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915"},
+                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915"}
                 }
                 };
-                var expected4 = new SpotifySimplifiedAlbumObject
+                var expected4 = new SimplifiedAlbumObject
                 {
                     Id = "3fbdu3A3yIYwmBNvik2vLk",
                     Name = "Three Songs",
                     NumberOfSongs = 3,
                     ReleaseDate = "2006-01-01",
                     Type = "single",
-                    Images = new List<SpotifyImageObject>
+                    Images = new List<ImageObject>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f"}
+                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f"},
+                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f"},
+                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f"}
                 }
                 };
-                var expected = new List<SpotifySimplifiedAlbumObject> { expected1, expected2, expected3, expected4 };
+                var expected = new List<SimplifiedAlbumObject> { expected1, expected2, expected3, expected4 };
                 result.Should().BeEquivalentTo(expected);
             }
 
@@ -99,7 +99,7 @@ namespace Albumify.Spotify.IntegrationTests
             {
                 var result = await sut.FindAlbumsByArtistAsync("Search the City");
 
-                var expected1 = new SpotifySimplifiedAlbumObject
+                var expected1 = new SimplifiedAlbumObject
                 {
                     Id = "2xmmuAkHQv3slZzaJwFGmB",
                     Name = "A Fire So Big The Heavens Can See It",
@@ -107,7 +107,7 @@ namespace Albumify.Spotify.IntegrationTests
                     ReleaseDate = "2008-01-01",
                     Type = "album"
                 };
-                var expected = new List<SpotifySimplifiedAlbumObject> { expected1 };
+                var expected = new List<SimplifiedAlbumObject> { expected1 };
                 result.Should().BeEquivalentTo(expected, o => o.Excluding(e => e.Images));
             }
         }

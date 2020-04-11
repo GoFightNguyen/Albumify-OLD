@@ -5,6 +5,6 @@ namespace Albumify.Spotify
 {
     public interface ISpotifyAuthorization
     {
-        Task<SpotifyAuthorizationResult> RequestAsync();
+        Task<AuthenticationObject> RequestAsync();
     }
 }

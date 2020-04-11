@@ -28,7 +28,7 @@ namespace Albumify.Spotify
         /// </summary>
         /// <param name="artistName">For multiword artist names, the words are matched in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
         /// <returns></returns>
-        public async Task<IEnumerable<SpotifySimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName)
+        public async Task<IEnumerable<SimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
@@ -68,13 +68,13 @@ namespace Albumify.Spotify
             if (response.IsSuccessStatusCode)
             {
                 var responseStream = response.Content.ReadAsStreamAsync();
-                var album = await JsonSerializer.DeserializeAsync<SpotifyAlbumObject>(await responseStream);
+                var album = await JsonSerializer.DeserializeAsync<AlbumObject>(await responseStream);
                 return (Album)album;
             }
             else
             {
                 var responseString = await response.Content.ReadAsStringAsync();
-                var error = JsonSerializer.Deserialize<SpotifyUnsuccessfulResponse>(responseString);
+                var error = JsonSerializer.Deserialize<UnsuccessfulResponse>(responseString);
                 // Log error as warning
                 return Album.CreateForUnknown(spotifyAlbumId);
             }

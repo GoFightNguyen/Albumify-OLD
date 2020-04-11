@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifyImageObject
+    public class ImageObject
     {
         [JsonPropertyName("height")]
         public int Height { get; set; }
@@ -14,7 +14,7 @@ namespace Albumify.Spotify.Models
         [JsonPropertyName("width")]
         public int Width { get; set; }
 
-        public static implicit operator Image(SpotifyImageObject spotifyImage)
+        public static implicit operator Image(ImageObject spotifyImage)
             => new Image
             {
                 Height = spotifyImage.Height,

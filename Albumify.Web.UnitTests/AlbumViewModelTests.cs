@@ -12,7 +12,7 @@ namespace Albumify.Web.UnitTests
         [TestMethod]
         public void SetsImagesToEmpty_IfSourceImagesAreNull()
         {
-            var source = new SpotifySimplifiedAlbumObject { Images = null };
+            var source = new SimplifiedAlbumObject { Images = null };
             var result = new AlbumViewModel(source);
             result.Images.Should().BeEmpty();
         }
@@ -20,7 +20,7 @@ namespace Albumify.Web.UnitTests
         [TestMethod]
         public void SetsImagesToEmpty_IfSourceImagesAreEmpty()
         {
-            var source = new SpotifySimplifiedAlbumObject { Images = new List<SpotifyImageObject>() };
+            var source = new SimplifiedAlbumObject { Images = new List<ImageObject>() };
             var result = new AlbumViewModel(source);
             result.Images.Should().BeEmpty();
         }
@@ -28,13 +28,13 @@ namespace Albumify.Web.UnitTests
         [TestMethod]
         public void ConvertsImages_IfSourceImagesExist()
         {
-            var source = new SpotifySimplifiedAlbumObject
+            var source = new SimplifiedAlbumObject
             {
-                Images = new List<SpotifyImageObject>
+                Images = new List<ImageObject>
                 {
-                    new SpotifyImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
-                    new SpotifyImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
                 }
             };
             var result = new AlbumViewModel(source);

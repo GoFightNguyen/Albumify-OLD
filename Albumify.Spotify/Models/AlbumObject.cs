@@ -5,13 +5,13 @@ using System.Text.Json.Serialization;
 
 namespace Albumify.Spotify.Models
 {
-    public class SpotifyAlbumObject
+    public class AlbumObject
     {
         [JsonPropertyName("id")]
         public string Id { get; set; }
 
         [JsonPropertyName("images")]
-        public List<SpotifyImageObject> Images { get; set; }
+        public List<ImageObject> Images { get; set; }
 
         [JsonPropertyName("label")]
         public string Label { get; set; }
@@ -26,12 +26,12 @@ namespace Albumify.Spotify.Models
         public string ReleaseDate { get; set; }
 
         [JsonPropertyName("tracks")]
-        public SpotifyPagingObject<SpotifySimplifiedTrackObject> Tracks { get; set; }
+        public PagingObject<SimplifiedTrackObject> Tracks { get; set; }
 
         [JsonPropertyName("artists")]
-        public List<SpotifyArtistObject> Artists { get; set; }
+        public List<ArtistObject> Artists { get; set; }
 
-        public static explicit operator Album(SpotifyAlbumObject spotifyAlbum)
+        public static explicit operator Album(AlbumObject spotifyAlbum)
         {
             var artists = spotifyAlbum.Artists.ConvertAll(a => (Artist)a).ToList();
             var images = spotifyAlbum.Images.ConvertAll(i => (Image)i).ToList();
