@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Albumify.Domain.Spotify
+namespace Albumify.Spotify
 {
     public interface ISpotifyAuthorization
     {

@@ -9,7 +9,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
-using Albumify.Domain.Spotify;
 
 namespace Albumify.Spotify.UnitTests
 {

@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Spotify;
 using Albumify.Web.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

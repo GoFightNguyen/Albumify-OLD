@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Albumify.Web.Models;
-using Albumify.Domain.Spotify;
+using Albumify.Spotify;
 using System.Linq;
 
 namespace Albumify.Web.Controllers

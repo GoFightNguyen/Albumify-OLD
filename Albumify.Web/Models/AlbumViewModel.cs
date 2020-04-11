@@ -1,4 +1,4 @@
-﻿using Albumify.Domain.Spotify;
+﻿using Albumify.Spotify;
 using System.Collections.Generic;
 using System.Linq;
 

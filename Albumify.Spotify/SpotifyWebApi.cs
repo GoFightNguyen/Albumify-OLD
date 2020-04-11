@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
 using Albumify.Domain.Models;
 using Albumify.Domain;
-using Albumify.Domain.Spotify;
 
 namespace Albumify.Spotify
 {
