@@ -17,7 +17,6 @@ namespace Albumify.Domain.Models
         public List<Image> Images { get; set; } = new List<Image>();
         public List<Track> Tracks { get; set; } = new List<Track>();
 
-        // TODO: ensure this is not propagated to Mongo
         public bool IsUnknown => Id == UnknownAlbumId;
 
         public static Album CreateForUnknown(string thirdPartyId)
