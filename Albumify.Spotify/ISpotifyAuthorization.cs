@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Albumify.Spotify.Models;
+using System.Threading.Tasks;
 
 namespace Albumify.Spotify
 {

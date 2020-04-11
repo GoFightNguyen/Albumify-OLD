@@ -17,6 +17,7 @@ namespace Albumify.Domain
             _myCollectionRepo = myCollectionRepository;
         }
 
+        // TODO: get from collection or third-party
         public async Task<Album> GetAsync(string thirdPartyid)
             => await _thirdPartyMusicService.GetAlbumAsync(thirdPartyid);
 

@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using System.Net;
+using Albumify.Spotify.Models;
 
 namespace Albumify.Spotify
 {

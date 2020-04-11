@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Albumify.Spotify.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Albumify.Spotify

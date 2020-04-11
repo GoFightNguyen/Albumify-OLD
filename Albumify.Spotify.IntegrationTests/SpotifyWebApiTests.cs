@@ -1,5 +1,6 @@
 using Albumify.Domain;
 using Albumify.Domain.Models;
+using Albumify.Spotify.Models;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

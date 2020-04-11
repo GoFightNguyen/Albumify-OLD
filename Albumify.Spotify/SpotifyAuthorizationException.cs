@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Albumify.Spotify.Models;
+using System;
 
 namespace Albumify.Spotify
 {

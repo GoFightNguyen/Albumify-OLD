@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Albumify.Spotify
+namespace Albumify.Spotify.Models
 {
     public struct SpotifyAuthorizationResult
     {
