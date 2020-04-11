@@ -1,6 +1,6 @@
+using Albumify.Domain;
 using Albumify.Domain.Models;
 using Albumify.Domain.Spotify;
-using Albumify.Spotify;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Albumify.Domain.IntegrationTests
+namespace Albumify.Spotify.IntegrationTests
 {
     [TestClass]
     public class TheSpotifyWebApi_WhenFindingAlbumsByArtist
     {
         // pagination
-        // noAuthenticated  - 401
+        // notAuthenticated  - 401
 
         [TestClass]
         public class ReturnsAlbums

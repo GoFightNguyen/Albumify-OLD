@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace Albumify.Domain.UnitTests
+namespace Albumify.Spotify.UnitTests
 {
     [TestClass]
     public class TheSpotifyWebApi_WhenFindingAlbumsByArtist

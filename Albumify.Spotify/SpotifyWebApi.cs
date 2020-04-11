@@ -6,8 +6,10 @@ using System.Text.Json;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
 using Albumify.Domain.Models;
+using Albumify.Domain;
+using Albumify.Domain.Spotify;
 
-namespace Albumify.Domain.Spotify
+namespace Albumify.Spotify
 {
     public class SpotifyWebApi : ISpotifyService, I3rdPartyMusicService
     {
