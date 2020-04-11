@@ -33,30 +33,4 @@ namespace Albumify.Domain.Models
                 Type = "album"
             };
     }
-
-    public class Artist
-    {
-        public string ThirdPartyId { get; set; }
-        public string Name { get; set; }
-
-        internal static Artist CreateForUnknown()
-            => new Artist
-            {
-                Name = "Unknown Artist",
-                ThirdPartyId = "Unknown"
-            };
-    }
-
-    public class Image
-    {
-        public int Height { get; set; }
-        public int Width { get; set; }
-        public string Url { get; set; }
-    }
-
-    public class Track
-    {
-        public string Name { get; set; }
-        public int Number { get; set; }
-    }
 }
