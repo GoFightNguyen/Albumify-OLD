@@ -5,13 +5,16 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("Albumify.AcceptanceTests")]
 
 namespace Albumify.MongoDB
 {
     public class MongoDbAlbumRepository : IMyCollectionRepository
     {
-        private readonly IMongoCollection<Album> _albums;
+        internal readonly IMongoCollection<Album> _albums;
 
         public MongoDbAlbumRepository(IConfiguration configuration)
         {

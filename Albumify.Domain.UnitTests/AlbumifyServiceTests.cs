@@ -4,6 +4,7 @@ using Moq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Albumify.Domain.Models;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Albumify.Domain.UnitTests
 {
@@ -28,7 +29,7 @@ namespace Albumify.Domain.UnitTests
             [ClassInitialize]
             public static async Task ClassIniitalize(TestContext _)
             {
-                var logger = new Mock<ILogger<AlbumifyService>>().Object;
+                var logger = new NullLogger<AlbumifyService>();
                 myCollection = new Mock<IMyCollectionRepository>();
                 thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
 
@@ -80,7 +81,7 @@ namespace Albumify.Domain.UnitTests
 
                 myCollection.Setup(c => c.AddAsync(It.IsAny<Album>())).ReturnsAsync(ExpectedAddedAlbum);
 
-                var logger = new Mock<ILogger<AlbumifyService>>().Object;
+                var logger = new NullLogger<AlbumifyService>();
                 var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, myCollection.Object);
                 result = await sut.AddAsync(ThirdPartyId);
             }
@@ -111,7 +112,7 @@ namespace Albumify.Domain.UnitTests
                 var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
                 thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(UnknownAlbum);
 
-                var logger = new Mock<ILogger<AlbumifyService>>().Object;
+                var logger = new NullLogger<AlbumifyService>();
                 var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, myCollection.Object);
                 result = await sut.AddAsync(ThirdPartyId);
             }
@@ -127,39 +128,94 @@ namespace Albumify.Domain.UnitTests
     [TestClass]
     public class TheAlbumifyService_WhenGettingAnAlbum
     {
-        private const string ThirdPartyId = "test-album-id";
-        private readonly ILogger<AlbumifyService> logger = new Mock<ILogger<AlbumifyService>>().Object;
-
-        private Mock<I3rdPartyMusicService> thirdPartyMusicService;
-        private AlbumifyService sut;
-
-        [TestInitialize]
-        public void TestInitialize()
+        [TestClass]
+        public class IfInMyCollection
         {
-            thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
-            sut = new AlbumifyService(logger, thirdPartyMusicService.Object, null);
+            private const string ThirdPartyId = "test-album-id";
+            private static readonly Album CollectionAlbum = new Album
+            {
+                Id = "123-456-789",
+                Label = "Unit Test",
+                ThirdPartyId = ThirdPartyId
+            };
+
+            private static Mock<I3rdPartyMusicService> ThirdPartyMusicService;
+            private static Album Result;
+
+            [ClassInitialize]
+            public static async Task ClassIniitalize(TestContext _)
+            {
+                var logger = new NullLogger<AlbumifyService>();
+                var myCollection = new Mock<IMyCollectionRepository>();
+                ThirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+
+                myCollection.Setup(m => m.FindBy3rdPartyId(ThirdPartyId)).ReturnsAsync(CollectionAlbum);
+
+                var sut = new AlbumifyService(logger, ThirdPartyMusicService.Object, myCollection.Object);
+                Result = await sut.GetAsync(ThirdPartyId);
+            }
+
+            [TestMethod]
+            public void DoesNotQuery3rdPartyMusicService() => ThirdPartyMusicService.Verify(s => s.GetAlbumAsync(It.IsAny<string>()), Times.Never);
+
+            [TestMethod]
+            public void ReturnsTheAlbumFromMyCollection() => Result.Should().BeEquivalentTo(CollectionAlbum);
         }
 
-        [TestMethod]
-        public async Task GetsTheAlbumFromTheThirdPartyMusicService()
+        [TestClass]
+        public class IfNotInMyCollection
         {
-            await sut.GetAsync(ThirdPartyId);
-            thirdPartyMusicService.Verify(s => s.GetAlbumAsync(ThirdPartyId), Times.Once);
-        }
+            private const string ThirdPartyId = "test-album-id";
 
-        [TestMethod]
-        public async Task ReturnsTheAlbum()
-        {
-            var expected = StubGettingAnAlbumFromThirdPartyMusicService();
-            var result = await sut.GetAsync(ThirdPartyId);
-            result.Should().BeEquivalentTo(expected);
-        }
+            private Mock<I3rdPartyMusicService> _thirdPartyMusicService;
+            private AlbumifyService _sut;
 
-        private Album StubGettingAnAlbumFromThirdPartyMusicService()
-        {
-            var thirdPartyMusicServiceAlbum = new Album { ThirdPartyId = ThirdPartyId };
-            thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(thirdPartyMusicServiceAlbum);
-            return thirdPartyMusicServiceAlbum;
+            [TestInitialize]
+            public void TestInitialize()
+            {
+                var logger = new NullLogger<AlbumifyService>();
+                var myCollection = new Mock<IMyCollectionRepository>();
+                myCollection.Setup(c => c.FindBy3rdPartyId(It.IsAny<string>())).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
+
+                _thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+                _sut = new AlbumifyService(logger, _thirdPartyMusicService.Object, myCollection.Object);
+            }
+
+            [TestMethod]
+            public async Task ButInThirdPartyMusicService_ReturnsTheAlbum()
+            {
+                var album = StubThirdPartyMusicServiceToReturnAlbum();
+                var result = await _sut.GetAsync(ThirdPartyId);
+                result.Should().BeEquivalentTo(album);
+            }
+
+            [TestMethod]
+            public async Task AndNotInThirdPartyMusicService_ReturnsUnknownAlbum()
+            {
+                var unknownAlbum = StubThirdPartyMusicServiceToReturnUnknownAlbum();
+                var result = await _sut.GetAsync(ThirdPartyId);
+                result.Should().BeEquivalentTo(unknownAlbum);
+            }
+
+            private Album StubThirdPartyMusicServiceToReturnAlbum()
+            {
+                var thirdPartyAlbum = new Album
+                {
+                    Label = "Unit Test",
+                    ThirdPartyId = ThirdPartyId,
+                    Name = "Tested"
+                };
+
+                _thirdPartyMusicService.Setup(s => s.GetAlbumAsync(ThirdPartyId)).ReturnsAsync(thirdPartyAlbum);
+                return thirdPartyAlbum;
+            }
+
+            private Album StubThirdPartyMusicServiceToReturnUnknownAlbum()
+            {
+                var unknownAlbum = Album.CreateForUnknown(ThirdPartyId);
+                _thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(unknownAlbum);
+                return unknownAlbum;
+            }
         }
     }
 }
