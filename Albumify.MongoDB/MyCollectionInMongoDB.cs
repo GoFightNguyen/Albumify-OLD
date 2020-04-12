@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace Albumify.MongoDB
 {
-    public class MongoDbAlbumRepository : IMyCollectionRepository
+    public class MyCollectionInMongoDB : IMyCollectionRepository
     {
         internal readonly IMongoCollection<Album> _albums;
 
-        public MongoDbAlbumRepository(IConfiguration configuration)
+        public MyCollectionInMongoDB(IConfiguration configuration)
         {
             RegisterClassMapIfNotAlready();
 
@@ -83,7 +83,7 @@ namespace Albumify.MongoDB
             await _albums.DeleteOneAsync(a => a.Id == id);
         }
 
-        public async Task<Album> FindBy3rdPartyId(string thirdPartyId)
+        public async Task<Album> FindBy3rdPartyIdAsync(string thirdPartyId)
         {
             var album = await _albums.Find(a => a.ThirdPartyId == thirdPartyId).SingleOrDefaultAsync();
             return album ?? Album.CreateForUnknown(thirdPartyId);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Albumify.MongoDB.IntegrationTests
 {
     [TestClass]
-    public class TheMongoDbAlbumRepository_WhenAddingAnAlbum
+    public class TheMyCollectionInMongoDB_WhenAddingAnAlbum
     {
         [TestClass]
         public class ThrowsAnException
@@ -69,7 +69,7 @@ namespace Albumify.MongoDB.IntegrationTests
                 Exception thrownEx = null;
                 try
                 {
-                    var sut = new MongoDbAlbumRepository(config);
+                    var sut = new MyCollectionInMongoDB(config);
                     await sut.AddAsync(new Album());
                 }
                 catch (Exception ex)
@@ -95,13 +95,13 @@ namespace Albumify.MongoDB.IntegrationTests
                 ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs"
             };
 
-            private static MongoDbAlbumRepository _sut;
+            private static MyCollectionInMongoDB _sut;
             private static Album _returnedAlbum;
 
             [ClassInitialize]
             public static async Task ClassInitialize(TestContext _)
             {
-                _sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
+                _sut = new MyCollectionInMongoDB(new TestingConfiguration().Build());
                 _returnedAlbum = await _sut.AddAsync(album);
             }
 
@@ -127,7 +127,7 @@ namespace Albumify.MongoDB.IntegrationTests
     }
 
     [TestClass]
-    public class TheMongoDbAlbumRepository_FindBy3rdPartyId
+    public class TheMyCollectionInMongoDB_FindBy3rdPartyId
     {
         private const string ThirdPartyId = "3DYB0yIQYuOge2RjS7qHjs";
         private static readonly Album album = new Album
@@ -139,12 +139,12 @@ namespace Albumify.MongoDB.IntegrationTests
             ThirdPartyId = ThirdPartyId
         };
 
-        private static MongoDbAlbumRepository _sut;
+        private static MyCollectionInMongoDB _sut;
 
         [ClassInitialize]
         public static async Task ClassInitialize(TestContext _)
         {
-            _sut = new MongoDbAlbumRepository(new TestingConfiguration().Build());
+            _sut = new MyCollectionInMongoDB(new TestingConfiguration().Build());
             await _sut.AddAsync(album);
         }
 
@@ -157,14 +157,14 @@ namespace Albumify.MongoDB.IntegrationTests
         [TestMethod]
         public async Task ReturnsUnknownAlbum_WhenNotFound()
         {
-            var result = await _sut.FindBy3rdPartyId("UnknownThirdPartyId");
+            var result = await _sut.FindBy3rdPartyIdAsync("UnknownThirdPartyId");
             result.Should().BeEquivalentTo(Album.CreateForUnknown("UnknownThirdPartyId"));
         }
 
         [TestMethod]
         public async Task ReturnsMatchingAlbum()
         {
-            var result = await _sut.FindBy3rdPartyId(ThirdPartyId);
+            var result = await _sut.FindBy3rdPartyIdAsync(ThirdPartyId);
             result.Should().BeEquivalentTo(album);
         }
     }

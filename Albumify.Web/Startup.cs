@@ -33,7 +33,7 @@ namespace Albumify.Web
             // Register as a singleton since it takes a direct dependency on MongoClient, which suggests
             // MongoClient be registered in DI with a singleton service lifetime.
             // https://mongodb.github.io/mongo-csharp-driver/2.8/reference/driver/connecting/#re-use
-            services.AddSingleton<IMyCollectionRepository, MongoDbAlbumRepository>();
+            services.AddSingleton<IMyCollectionRepository, MyCollectionInMongoDB>();
 
             services.AddScoped<AlbumifyService>();
         }

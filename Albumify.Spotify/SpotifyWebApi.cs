@@ -52,16 +52,16 @@ namespace Albumify.Spotify
         /// <summary>
         /// Get a specific album given its unique Spotify Id.
         /// </summary>
-        /// <param name="spotifyAlbumId"></param>
+        /// <param name="thirdPartyId">The unique Spotify Id of the Album</param>
         /// <returns></returns>
-        public async Task<Album> GetAlbumAsync(string spotifyAlbumId)
+        public async Task<Album> GetAlbumAsync(string thirdPartyId)
         {
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
             _httpClient.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue(accessToken.TokenType, accessToken.AccessToken);
 
-            var encoded = WebUtility.HtmlEncode(spotifyAlbumId);
+            var encoded = WebUtility.HtmlEncode(thirdPartyId);
             var url = $"https://api.spotify.com/v1/albums/{encoded}";
             var response = await _httpClient.GetAsync(url);
 
@@ -76,7 +76,7 @@ namespace Albumify.Spotify
                 var responseString = await response.Content.ReadAsStringAsync();
                 var error = JsonSerializer.Deserialize<UnsuccessfulResponse>(responseString);
                 // Log error as warning
-                return Album.CreateForUnknown(spotifyAlbumId);
+                return Album.CreateForUnknown(thirdPartyId);
             }
         }
     }

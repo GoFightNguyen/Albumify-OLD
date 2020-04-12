@@ -33,7 +33,7 @@ namespace Albumify.Domain.UnitTests
                 myCollection = new Mock<IMyCollectionRepository>();
                 thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
 
-                myCollection.Setup(m => m.FindBy3rdPartyId(ThirdPartyId)).ReturnsAsync(CollectionAlbum);
+                myCollection.Setup(m => m.FindBy3rdPartyIdAsync(ThirdPartyId)).ReturnsAsync(CollectionAlbum);
 
                 var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, myCollection.Object);
                 result = await sut.AddAsync(ThirdPartyId);
@@ -74,7 +74,7 @@ namespace Albumify.Domain.UnitTests
             public static async Task TestInitialize(TestContext _)
             {
                 myCollection = new Mock<IMyCollectionRepository>();
-                myCollection.Setup(c => c.FindBy3rdPartyId(ThirdPartyId)).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
+                myCollection.Setup(c => c.FindBy3rdPartyIdAsync(ThirdPartyId)).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
 
                 var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
                 thirdPartyMusicService.Setup(s => s.GetAlbumAsync(ThirdPartyId)).ReturnsAsync(ThirdPartyAlbum);
@@ -107,7 +107,7 @@ namespace Albumify.Domain.UnitTests
             public static async Task ClassInitialize(TestContext _)
             {
                 myCollection = new Mock<IMyCollectionRepository>();
-                myCollection.Setup(c => c.FindBy3rdPartyId(It.IsAny<string>())).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
+                myCollection.Setup(c => c.FindBy3rdPartyIdAsync(It.IsAny<string>())).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
 
                 var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
                 thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(UnknownAlbum);
@@ -149,7 +149,7 @@ namespace Albumify.Domain.UnitTests
                 var myCollection = new Mock<IMyCollectionRepository>();
                 ThirdPartyMusicService = new Mock<I3rdPartyMusicService>();
 
-                myCollection.Setup(m => m.FindBy3rdPartyId(ThirdPartyId)).ReturnsAsync(CollectionAlbum);
+                myCollection.Setup(m => m.FindBy3rdPartyIdAsync(ThirdPartyId)).ReturnsAsync(CollectionAlbum);
 
                 var sut = new AlbumifyService(logger, ThirdPartyMusicService.Object, myCollection.Object);
                 Result = await sut.GetAsync(ThirdPartyId);
@@ -175,7 +175,7 @@ namespace Albumify.Domain.UnitTests
             {
                 var logger = new NullLogger<AlbumifyService>();
                 var myCollection = new Mock<IMyCollectionRepository>();
-                myCollection.Setup(c => c.FindBy3rdPartyId(It.IsAny<string>())).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
+                myCollection.Setup(c => c.FindBy3rdPartyIdAsync(It.IsAny<string>())).ReturnsAsync(Album.CreateForUnknown(ThirdPartyId));
 
                 _thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
                 _sut = new AlbumifyService(logger, _thirdPartyMusicService.Object, myCollection.Object);

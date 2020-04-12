@@ -20,7 +20,7 @@ namespace Albumify.AcceptanceTests
         {
             private const string ThirdPartyId = "1oDkUnjCBAHsaQtr0J0s3t";
 
-            private static MongoDbAlbumRepository _myCollectionInMongoDB;
+            private static MyCollectionInMongoDB _myCollectionInMongoDB;
             private static AlbumifyService _sut;
             private static Album _result;
 
@@ -66,7 +66,7 @@ namespace Albumify.AcceptanceTests
                 var logger = new NullLogger<AlbumifyService>();
                 var config = new TestingConfiguration().Build();
                 var spotifyMusicService = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
-                _myCollectionInMongoDB = new MongoDbAlbumRepository(config);
+                _myCollectionInMongoDB = new MyCollectionInMongoDB(config);
                 _sut = new AlbumifyService(logger, spotifyMusicService, _myCollectionInMongoDB);
 
                 _result = await _sut.AddAsync(ThirdPartyId);
@@ -92,7 +92,7 @@ namespace Albumify.AcceptanceTests
         {
             private const string ThirdPartyId = "5DPZqC3ySZkJClCvZlIq6K";
 
-            private static MongoDbAlbumRepository _myCollectionInMongoDB;
+            private static MyCollectionInMongoDB _myCollectionInMongoDB;
             private static AlbumifyService _sut;
             private static Album _result;
 
@@ -138,7 +138,7 @@ namespace Albumify.AcceptanceTests
                 var logger = new NullLogger<AlbumifyService>();
                 var config = new TestingConfiguration().Build();
                 var spotifyMusicService = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
-                _myCollectionInMongoDB = new MongoDbAlbumRepository(config);
+                _myCollectionInMongoDB = new MyCollectionInMongoDB(config);
                 _sut = new AlbumifyService(logger, spotifyMusicService, _myCollectionInMongoDB);
 
                 var originalAdd = await _sut.AddAsync(ThirdPartyId);

@@ -19,56 +19,31 @@ namespace Albumify.Domain
 
         public async Task<Album> GetAsync(string thirdPartyId)
         {
-            var album = await _myCollectionRepo.FindBy3rdPartyId(thirdPartyId);
+            var album = await _myCollectionRepo.FindBy3rdPartyIdAsync(thirdPartyId);
             if (!album.IsUnknown) return album;
 
             album = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
             if (album.IsUnknown)
-                _logger.LogWarning("Use Case - Get: The 3rd party music service was unable to find an album with Id of {0}", thirdPartyId);
+                _logger.LogWarning("Use Case - Get: Unknown Album: thirdPartyId {0}", thirdPartyId);
 
             return album;
         }
 
         public async Task<Album> AddAsync(string thirdPartyId)
         {
-            _logger.LogInformation("Use Case - Add: 3rd party Id of {0}", thirdPartyId);
+            _logger.LogInformation("Use Case - Add: thirdPartyId {0}", thirdPartyId);
 
-            var album = await _myCollectionRepo.FindBy3rdPartyId(thirdPartyId);
+            var album = await _myCollectionRepo.FindBy3rdPartyIdAsync(thirdPartyId);
             if (!album.IsUnknown) return album;
-
-            // TODO: catch thrown errors here?
 
             album = await _thirdPartyMusicService.GetAlbumAsync(thirdPartyId);
             if(album.IsUnknown)
             {
-                _logger.LogWarning("Use Case - Add: The 3rd party music service was unable to find an album with Id of {0}", thirdPartyId);
+                _logger.LogWarning("Use Case - Add: Unknown Album: thirdPartyId {0}", thirdPartyId);
                 return album;
             }
 
             return await _myCollectionRepo.AddAsync(album);
         }
-    }
-
-    public interface I3rdPartyMusicService
-    {
-        /// <summary>
-        /// Get a specific album given its unique Third-Party Id.
-        /// If the album is not found, then <see cref="Album.CreateForUnknown(thirdpartyId)"/> is returned.
-        /// </summary>
-        /// <param name="thirdPartyId"></param>
-        /// <returns></returns>
-        Task<Album> GetAlbumAsync(string thirdPartyId);
-    }
-
-    public interface IMyCollectionRepository
-    {
-        Task<Album> AddAsync(Album album);
-        /// <summary>
-        /// Get a specific album given its unique Third-Party Id.
-        /// If the album is not found, then <see cref="Album.CreateForUnknown(thirdpartyId)"/> is returned.
-        /// </summary>
-        /// <param name="thirdPartyId"></param>
-        /// <returns></returns>
-        Task<Album> FindBy3rdPartyId(string thirdPartyId);
     }
 }
