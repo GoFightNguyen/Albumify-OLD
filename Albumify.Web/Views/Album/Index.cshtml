@@ -8,7 +8,7 @@
         <responsive-images images="@Model.Images" alt="@Model.ImagesAltText"></responsive-images>
         <div style="text-align: center">
             <span dir="auto">@Model.Name</span>
-            <p>@Model.Artist.Name</p>
+            <p>@string.Join(", ", @Model.Artists.Select(a => a.Name))</p>
             <form method="post" asp-action="Add">
                 <div hidden>
                     @Html.EditorForModel()

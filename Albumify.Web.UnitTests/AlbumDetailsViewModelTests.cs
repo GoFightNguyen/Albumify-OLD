@@ -26,12 +26,16 @@ namespace Albumify.Web.UnitTests
         }
 
         [TestMethod]
-        public void CopiesFirstArtist()
+        public void ConvertsArtists()
         {
             var source = CreateDomainAlbum();
             var result = new AlbumDetailsViewModel(source);
-            var expected = new ArtistViewModel { ThirdPartyId = "09l3QuYe7ExcyAZYosgVJx", Name = "Jonezetta" };
-            result.Artist.Should().BeEquivalentTo(expected);
+            var expected = new List<ArtistViewModel>
+            {
+                new ArtistViewModel { Name = "Jonezetta", ThirdPartyId = "09l3QuYe7ExcyAZYosgVJx" },
+                new ArtistViewModel { Name = "Made Up", ThirdPartyId = "MadeUp"}
+            };
+            result.Artists.Should().BeEquivalentTo(expected);
         }
 
         [TestMethod]

@@ -10,7 +10,7 @@ namespace Albumify.Web.Models
 
         public string Name { get; set; }
 
-        public ArtistViewModel Artist { get; set; }
+        public List<ArtistViewModel> Artists { get; set; }
 
         public string ReleaseDate { get; set; }
 
@@ -34,7 +34,7 @@ namespace Albumify.Web.Models
             ReleaseDate = album.ReleaseDate.Substring(0, 4);    // should there by a SpotifyDate object?
             Type = album.Type;
 
-            Artist = new ArtistViewModel(album.Artists[0]);
+            Artists = album.Artists.ConvertAll(a => new ArtistViewModel(a));
 
             Images = album.Images == null ?
                 new List<ImageViewModel>() :
