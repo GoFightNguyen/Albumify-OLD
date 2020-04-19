@@ -20,4 +20,10 @@
     <ProjectReference Include="..\Albumify.Spotify\Albumify.Spotify.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="SearchArtistsByName-Items-NormaJean.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

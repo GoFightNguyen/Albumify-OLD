@@ -29,7 +29,7 @@ namespace Albumify.Spotify.Models
         public PagingObject<SimplifiedTrackObject> Tracks { get; set; }
 
         [JsonPropertyName("artists")]
-        public List<ArtistObject> Artists { get; set; }
+        public List<SimplifiedArtistObject> Artists { get; set; }
 
         public static explicit operator Album(AlbumObject spotifyAlbum)
         {

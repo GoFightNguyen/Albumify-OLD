@@ -79,5 +79,34 @@ namespace Albumify.Spotify
                 return Album.CreateForUnknown(thirdPartyId);
             }
         }
+
+        /// <summary>
+        /// Search artists.
+        /// There is no guarantee of order because v1 of the Spotify API does not support ordering
+        /// </summary>
+        /// <param name="name">For multiword artist names, match the words in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
+        /// <returns></returns>
+        public async Task<List<Artist>> SearchArtistsByNameAsync(string name)
+        {
+            var accessToken = await _spotifyAuthorization.RequestAsync();
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue(accessToken.TokenType, accessToken.AccessToken);
+
+            var queryParams = new Dictionary<string, string>
+            {
+                {"q", $"artist:\"{name}\"" }, // Keywords are matched in any order unless surrounded by double quotations
+                {"type", "artist"},
+                {"limit", "50" }    // 50 is the max. I don't expect there to be 50 artist matches, so I use the max in hopes of never having to page
+            };
+
+            var url = QueryHelpers.AddQueryString("https://api.spotify.com/v1/search", queryParams);
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var responseStream = response.Content.ReadAsStreamAsync();
+            var searchResult = await JsonSerializer.DeserializeAsync<SearchArtistsObject>(await responseStream);
+            return searchResult.Artists.Items.ConvertAll(a => (Artist)a);
+        }
     }
 }

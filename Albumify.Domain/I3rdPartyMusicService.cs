@@ -1,4 +1,5 @@
 ﻿using Albumify.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Albumify.Domain
@@ -12,5 +13,13 @@ namespace Albumify.Domain
         /// <param name="thirdPartyId"></param>
         /// <returns></returns>
         Task<Album> GetAlbumAsync(string thirdPartyId);
+
+        /// <summary>
+        /// Search artists by name.
+        /// If there are no matches, then return an empty collection.
+        /// </summary>
+        /// <param name="name">For multiword artist names, match the words in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
+        /// <returns></returns>
+        Task<List<Artist>> SearchArtistsByNameAsync(string name);
     }
 }

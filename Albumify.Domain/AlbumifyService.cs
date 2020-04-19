@@ -1,5 +1,6 @@
 ﻿using Albumify.Domain.Models;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Albumify.Domain
@@ -44,6 +45,18 @@ namespace Albumify.Domain
             }
 
             return await _myCollectionRepo.AddAsync(album);
+        }
+
+        /// <summary>
+        /// Search artists by name.
+        /// </summary>
+        /// <param name="name">For multiword artist names, match the words in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
+        /// <returns></returns>
+        public async Task<List<Artist>> SearchArtistsByNameAsync(string name)
+        {
+            // TODO: flag as in collection
+            // TODO: order in collection as higher
+            return await _thirdPartyMusicService.SearchArtistsByNameAsync(name);
         }
     }
 }

@@ -2,9 +2,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Albumify.Domain.Models;
 using Microsoft.Extensions.Logging.Abstractions;
+using System.Collections.Generic;
 
 namespace Albumify.Domain.UnitTests
 {
@@ -216,6 +216,88 @@ namespace Albumify.Domain.UnitTests
                 _thirdPartyMusicService.Setup(s => s.GetAlbumAsync(It.IsAny<string>())).ReturnsAsync(unknownAlbum);
                 return unknownAlbum;
             }
+        }
+    }
+
+    [TestClass]
+    public class TheAlbumifyService_WhenSearchingArtistsByName
+    {
+        [TestMethod]
+        public async Task ReturnsTheResultsOfTheThirdPartyMusicService()
+        {
+            // Arrange
+            const string ArtistName = "Norma Jean";
+            var expected = new List<Artist>
+            {
+                new Artist
+                {
+                    Name = "Norma Jean Martine",
+                    ThirdPartyId = "2fsk4VlJdNF6G8cCMDrrzB",
+                    Images = new List<Image>
+                    {
+                        new Image
+                        {
+                            Height = 640,
+                            Url = "https://i.scdn.co/image/3bafc579f8582e3d65eb35e31f1891901aa76749",
+                            Width = 640
+                        },
+                        new Image
+                        {
+                            Height = 320,
+                            Url = "https://i.scdn.co/image/2ea1b920b93a7d1480009135ec2bc15671725154",
+                            Width = 320
+                        },
+                        new Image
+                        {
+                            Height = 160,
+                            Url = "https://i.scdn.co/image/037893c02cb3e449c2f97ef8e71a26889f6cdec8",
+                            Width = 160
+                        }
+                    }
+                },
+                new Artist
+                {
+                    Name = "Norma Jean",
+                    ThirdPartyId = "55b0Gfm53udtGBs8mmNXrH",
+                    Images = new List<Image>
+                    {
+                        new Image
+                        {
+                            Height = 640,
+                            Url = "https://i.scdn.co/image/4f4fb36a3c564d0078be2e21962ee47724747b44",
+                            Width = 640
+                        },
+                        new Image
+                        {
+                            Height = 320,
+                            Url = "https://i.scdn.co/image/8717743daaf2e2b2f53008e5835232f9e90d5897",
+                            Width = 320
+                        },
+                        new Image
+                        {
+                            Height = 160,
+                            Url = "https://i.scdn.co/image/e99dfcc008ac74efced891cda956f6e4d0463260",
+                            Width = 160
+                        }
+                    }
+                },
+                new Artist
+                {
+                    Name = "Norma Jean Moslander",
+                    ThirdPartyId = "4ZhOkZoqfppPsyRFuoVgTv"
+                }
+            };
+
+            var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+            thirdPartyMusicService.Setup(s => s.SearchArtistsByNameAsync(ArtistName)).ReturnsAsync(expected);
+
+            // Act
+            var logger = new NullLogger<AlbumifyService>();
+            var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, null);
+            var result = await sut.SearchArtistsByNameAsync(ArtistName);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
         }
     }
 }

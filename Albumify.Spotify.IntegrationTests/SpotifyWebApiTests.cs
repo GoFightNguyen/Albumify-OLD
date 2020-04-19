@@ -5,7 +5,9 @@ using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Albumify.Spotify.IntegrationTests
@@ -740,6 +742,48 @@ namespace Albumify.Spotify.IntegrationTests
                 Type = "album"
             };
             result.Should().BeEquivalentTo(expected);
+        }
+    }
+
+    [TestClass]
+    public class TheSpotifyWebApi_WhenSearchingArtistsByName
+    {
+        [TestMethod]
+        public async Task ReturnsEmpty_IfThereAreNoMatches()
+        {
+            const string ArtistName = "abcdefghijklmnopqrstuvwxyz";
+            var config = new TestingConfiguration().Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var result = await sut.SearchArtistsByNameAsync(ArtistName);
+            result.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public async Task ReturnsTheArtists()
+        {
+            const string ArtistName = "Norma Jean";
+            var config = new TestingConfiguration().Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var expected = await BuildExpectedAsync();
+            var result = await sut.SearchArtistsByNameAsync(ArtistName);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private static async Task<IEnumerable<Artist>> BuildExpectedAsync()
+        {
+            var json = await File.ReadAllTextAsync("SearchArtistsByName-Items-NormaJean.json");
+            var artists = JsonSerializer.Deserialize<TestHelpingObject>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip
+            });
+
+            return artists.Items;
+        }
+        private class TestHelpingObject
+        {
+            public List<Artist> Items { get; set; }
         }
     }
 }
