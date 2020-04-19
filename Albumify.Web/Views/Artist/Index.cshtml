@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Albumify.Web.Models.SearchArtistViewModel>
+
+@{
+    ViewData["Title"] = "Artist";
+}
+
+<h1>View</h1>
+
+<div class="container-fluid">
+    <section>
+        <div>
+            <h1 dir="auto">Artists</h1>
+        </div>
+        <div class="container-fluid" style="padding:0">
+            <div class="row">
+                @foreach (var item in Model)
+                {
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                        <div class="card" style="border:none;">
+                            <responsive-images class="card-img-top" images="@item.Images" alt="@item.ImagesAltText"></responsive-images>
+                            <div class="card-body">
+                                <h6 class="card-title" style="text-align:center" dir="auto">@item.Name</h6>
+                                @*<a class="stretched-link" asp-controller="Artist" asp-action="fill_in" asp-route-id="@item.ThirdPartyId"></a>*@
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

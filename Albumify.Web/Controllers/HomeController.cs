@@ -21,6 +21,7 @@ namespace Albumify.Web.Controllers
 
         public async Task<IActionResult> Index(string artist)
         {
+            // TODO: don't need this anymore, cleanup everything related
             var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync(artist);
             var viewModels = albums
                 .Select(a => new AlbumViewModel(a))

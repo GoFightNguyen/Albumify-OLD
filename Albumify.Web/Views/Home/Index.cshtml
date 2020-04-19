@@ -11,8 +11,12 @@
             <strong>Expires In:</strong> <code>@Model.ExpiresIn</code>
         </p>
     </div>*@
-<form asp-controller="Home" asp-action="Index" method="get">
+@*<form asp-controller="Home" asp-action="Index" method="get">
     Artist: <input type="text" name="artist" />
+    <input type="submit" value="Search" />
+</form>*@
+<form asp-controller="Artist" asp-action="Index" method="get">
+    Artist: <input type="text" name="artistName" />
     <input type="submit" value="Search" />
 </form>
 <div class="container-fluid">
