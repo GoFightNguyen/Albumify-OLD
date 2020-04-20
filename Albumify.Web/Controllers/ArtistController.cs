@@ -18,7 +18,7 @@ namespace Albumify.Web.Controllers
             _albumifyService = albumifyService;
         }
 
-        public async Task<IActionResult> Index(string artistName)
+        public async Task<IActionResult> Search(string artistName)
         {
             var artists = await _albumifyService.SearchArtistsByNameAsync(artistName);
             var viewModels = artists

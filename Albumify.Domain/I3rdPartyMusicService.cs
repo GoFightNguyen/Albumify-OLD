@@ -21,5 +21,12 @@ namespace Albumify.Domain
         /// <param name="name">For multiword artist names, match the words in order. For example, "Bob Dylan" will only match on anything containg "Bob Dylan".</param>
         /// <returns></returns>
         Task<List<Artist>> SearchArtistsByNameAsync(string name);
+
+        /// <summary>
+        /// Get an artist's ablums.
+        /// </summary>
+        /// <param name="thirdPartyId">The third party id of the artist.</param>
+        /// <returns></returns>
+        Task<List<Album>> GetAnArtistsAlbumsAsync(string thirdPartyId);
     }
 }

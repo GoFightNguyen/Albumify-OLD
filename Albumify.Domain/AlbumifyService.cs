@@ -58,5 +58,15 @@ namespace Albumify.Domain
             // TODO: order in collection as higher
             return await _thirdPartyMusicService.SearchArtistsByNameAsync(name);
         }
+
+        /// <summary>
+        /// Get an artist's albums.
+        /// </summary>
+        /// <param name="thirdPartyId">The third party id of the artist.</param>
+        /// <returns></returns>
+        public async Task<List<Album>> GetAnArtistsAlbumsAsync(string thirdPartyId)
+        {
+            return await _thirdPartyMusicService.GetAnArtistsAlbumsAsync(thirdPartyId);
+        }
     }
 }

@@ -1,0 +1,311 @@
+{
+  "href": "https://api.spotify.com/v1/artists/09l3QuYe7ExcyAZYosgVJx/albums?offset=0&limit=20&include_groups=album,single,compilation,appears_on",
+  "items": [
+    {
+      "album_group": "album",
+      "type": "album",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/09l3QuYe7ExcyAZYosgVJx"
+          },
+          "href": "https://api.spotify.com/v1/artists/09l3QuYe7ExcyAZYosgVJx",
+          "thirdPartyId": "09l3QuYe7ExcyAZYosgVJx",
+          "name": "Jonezetta",
+          "type": "artist",
+          "uri": "spotify:artist:09l3QuYe7ExcyAZYosgVJx"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/13pS0hN39dSGi9jqWpPmmB"
+      },
+      "href": "https://api.spotify.com/v1/albums/13pS0hN39dSGi9jqWpPmmB",
+      "thirdPartyId": "13pS0hN39dSGi9jqWpPmmB",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100",
+          "width": 64
+        }
+      ],
+      "name": "Cruel To Be Young",
+      "releaseDate": "2008-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 12,
+      "uri": "spotify:album:13pS0hN39dSGi9jqWpPmmB"
+    },
+    {
+      "album_group": "album",
+      "type": "album",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/09l3QuYe7ExcyAZYosgVJx"
+          },
+          "href": "https://api.spotify.com/v1/artists/09l3QuYe7ExcyAZYosgVJx",
+          "thirdPartyId": "09l3QuYe7ExcyAZYosgVJx",
+          "name": "Jonezetta",
+          "type": "artist",
+          "uri": "spotify:artist:09l3QuYe7ExcyAZYosgVJx"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/3DYB0yIQYuOge2RjS7qHjs"
+      },
+      "href": "https://api.spotify.com/v1/albums/3DYB0yIQYuOge2RjS7qHjs",
+      "thirdPartyId": "3DYB0yIQYuOge2RjS7qHjs",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656",
+          "width": 64
+        }
+      ],
+      "name": "Popularity",
+      "releaseDate": "2006-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 11,
+      "uri": "spotify:album:3DYB0yIQYuOge2RjS7qHjs"
+    },
+    {
+      "album_group": "single",
+      "type": "single",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/09l3QuYe7ExcyAZYosgVJx"
+          },
+          "href": "https://api.spotify.com/v1/artists/09l3QuYe7ExcyAZYosgVJx",
+          "thirdPartyId": "09l3QuYe7ExcyAZYosgVJx",
+          "name": "Jonezetta",
+          "type": "artist",
+          "uri": "spotify:artist:09l3QuYe7ExcyAZYosgVJx"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/1yuFbCBPcqxhI25V7tjtkV"
+      },
+      "href": "https://api.spotify.com/v1/albums/1yuFbCBPcqxhI25V7tjtkV",
+      "thirdPartyId": "1yuFbCBPcqxhI25V7tjtkV",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915",
+          "width": 64
+        }
+      ],
+      "name": "Sony Connect Set",
+      "releaseDate": "2007-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 5,
+      "uri": "spotify:album:1yuFbCBPcqxhI25V7tjtkV"
+    },
+    {
+      "album_group": "single",
+      "type": "single",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/09l3QuYe7ExcyAZYosgVJx"
+          },
+          "href": "https://api.spotify.com/v1/artists/09l3QuYe7ExcyAZYosgVJx",
+          "thirdPartyId": "09l3QuYe7ExcyAZYosgVJx",
+          "name": "Jonezetta",
+          "type": "artist",
+          "uri": "spotify:artist:09l3QuYe7ExcyAZYosgVJx"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/3fbdu3A3yIYwmBNvik2vLk"
+      },
+      "href": "https://api.spotify.com/v1/albums/3fbdu3A3yIYwmBNvik2vLk",
+      "thirdPartyId": "3fbdu3A3yIYwmBNvik2vLk",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f",
+          "width": 64
+        }
+      ],
+      "name": "Three Songs",
+      "releaseDate": "2006-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 3,
+      "uri": "spotify:album:3fbdu3A3yIYwmBNvik2vLk"
+    },
+    {
+      "album_group": "appears_on",
+      "type": "album",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/68Sq69grPUK7Z9wHRfarOX"
+          },
+          "href": "https://api.spotify.com/v1/artists/68Sq69grPUK7Z9wHRfarOX",
+          "thirdPartyId": "68Sq69grPUK7Z9wHRfarOX",
+          "name": "Yeieee",
+          "type": "artist",
+          "uri": "spotify:artist:68Sq69grPUK7Z9wHRfarOX"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/1VwnYBbXQdYpkQYCxtvdgp"
+      },
+      "href": "https://api.spotify.com/v1/albums/1VwnYBbXQdYpkQYCxtvdgp",
+      "thirdPartyId": "1VwnYBbXQdYpkQYCxtvdgp",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b27377384005d5a5853dc19f2950",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e0277384005d5a5853dc19f2950",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d0000485177384005d5a5853dc19f2950",
+          "width": 64
+        }
+      ],
+      "name": "Lyle the Lion",
+      "releaseDate": "2014-08-21",
+      "release_date_precision": "day",
+      "total_tracks": 7,
+      "uri": "spotify:album:1VwnYBbXQdYpkQYCxtvdgp"
+    },
+    {
+      "album_group": "appears_on",
+      "type": "compilation",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of"
+          },
+          "href": "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+          "thirdPartyId": "0LyfQWJT6nXafLPZqxe9Of",
+          "name": "Various Artists",
+          "type": "artist",
+          "uri": "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/7jFTWkbpEzY27mFv9jz62a"
+      },
+      "href": "https://api.spotify.com/v1/albums/7jFTWkbpEzY27mFv9jz62a",
+      "thirdPartyId": "7jFTWkbpEzY27mFv9jz62a",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273c4654a4dc6aca4c1062fa23c",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02c4654a4dc6aca4c1062fa23c",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851c4654a4dc6aca4c1062fa23c",
+          "width": 64
+        }
+      ],
+      "name": "Time Will Pass You By",
+      "releaseDate": "2011-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 11,
+      "uri": "spotify:album:7jFTWkbpEzY27mFv9jz62a"
+    },
+    {
+      "album_group": "appears_on",
+      "type": "compilation",
+      "artists": [
+        {
+          "external_urls": {
+            "spotify": "https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of"
+          },
+          "href": "https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of",
+          "thirdPartyId": "0LyfQWJT6nXafLPZqxe9Of",
+          "name": "Various Artists",
+          "type": "artist",
+          "uri": "spotify:artist:0LyfQWJT6nXafLPZqxe9Of"
+        }
+      ],
+      "external_urls": {
+        "spotify": "https://open.spotify.com/album/0JCZGN5sBlqlfRC0imo3ln"
+      },
+      "href": "https://api.spotify.com/v1/albums/0JCZGN5sBlqlfRC0imo3ln",
+      "thirdPartyId": "0JCZGN5sBlqlfRC0imo3ln",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273cdfd336797af1c5b25a6b575",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02cdfd336797af1c5b25a6b575",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851cdfd336797af1c5b25a6b575",
+          "width": 64
+        }
+      ],
+      "name": "You Can't Handle The Tooth",
+      "releaseDate": "2006-01-01",
+      "release_date_precision": "day",
+      "total_tracks": 20,
+      "uri": "spotify:album:0JCZGN5sBlqlfRC0imo3ln"
+    }
+  ],
+  "limit": 20,
+  "next": null,
+  "offset": 0,
+  "previous": null,
+  "total": 7
+}

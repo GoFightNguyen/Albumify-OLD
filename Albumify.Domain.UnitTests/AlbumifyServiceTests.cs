@@ -300,4 +300,44 @@ namespace Albumify.Domain.UnitTests
             result.Should().BeEquivalentTo(expected);
         }
     }
+
+    [TestClass]
+    public class TheAlbumifyService_WhenGettingAnArtistsAlbums
+    {
+        [TestMethod]
+        public async Task ReturnsTheResultsOfTheThirdPartyMusicService()
+        {
+            // Arrange
+            const string THIRD_PARTY_ID_ARTIST = "55b0Gfm53udtGBs8mmNXrH";
+            var artist = new Artist { ThirdPartyId = THIRD_PARTY_ID_ARTIST, Name = "Norma Jean" };
+            var expected1 = new Album
+            {
+                ThirdPartyId = "0DYeH7SR1w2dvQ05eR0dIP",
+                Name = "All Hail",
+                ReleaseDate = "2019-10-25",
+                Type = "album",
+                Artists = new List<Artist> { artist }
+            };
+            var expected2 = new Album
+            {
+                ThirdPartyId = "1eEbsiMBr41CdwD8tGSamK",
+                Name = "Polar Similar",
+                ReleaseDate = "2016-09-09",
+                Type = "album",
+                Artists = new List<Artist> { artist }
+            };
+            var expected = new List<Album> { expected1, expected2 };
+
+            var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+            thirdPartyMusicService.Setup(s => s.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST)).ReturnsAsync(expected);
+
+            // Act
+            var logger = new NullLogger<AlbumifyService>();
+            var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, null);
+            var result = await sut.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST);
+
+            // Assert
+            result.Should().BeEquivalentTo(expected);
+        }
+    }
 }

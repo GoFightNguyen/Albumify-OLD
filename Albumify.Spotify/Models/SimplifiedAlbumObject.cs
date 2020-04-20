@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Albumify.Domain.Models;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json.Serialization;
 
 namespace Albumify.Spotify.Models
@@ -22,5 +24,23 @@ namespace Albumify.Spotify.Models
 
         [JsonPropertyName("images")]
         public List<ImageObject> Images { get; set; }
+
+        [JsonPropertyName("artists")]
+        public List<SimplifiedArtistObject> Artists { get; set; }
+
+        public static explicit operator Album(SimplifiedAlbumObject spotifyAlbum)
+        {
+            var artists = spotifyAlbum.Artists.ConvertAll(a => (Artist)a).ToList();
+            var images = spotifyAlbum.Images.ConvertAll(i => (Image)i).ToList();
+            return new Album
+            {
+                Artists = artists,
+                Images = images,
+                Name = spotifyAlbum.Name,
+                ReleaseDate = spotifyAlbum.ReleaseDate,
+                ThirdPartyId = spotifyAlbum.Id,
+                Type = spotifyAlbum.Type
+            };
+        }
     }
 }

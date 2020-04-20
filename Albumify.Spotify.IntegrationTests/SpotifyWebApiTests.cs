@@ -35,6 +35,7 @@ namespace Albumify.Spotify.IntegrationTests
             {
                 var result = await sut.FindAlbumsByArtistAsync("Jonezetta");
 
+                var expectedArtists = new List<SimplifiedArtistObject> { new SimplifiedArtistObject { Name = "Jonezetta", Id = "09l3QuYe7ExcyAZYosgVJx" } };
                 var expected1 = new SimplifiedAlbumObject
                 {
                     Id = "3DYB0yIQYuOge2RjS7qHjs",
@@ -43,11 +44,12 @@ namespace Albumify.Spotify.IntegrationTests
                     ReleaseDate = "2006-01-01",
                     Type = "album",
                     Images = new List<ImageObject>
-                {
-                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
-                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
-                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
-                }
+                    {
+                        new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273d50eac8c4023cf2b40413656"},
+                        new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02d50eac8c4023cf2b40413656"},
+                        new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851d50eac8c4023cf2b40413656"}
+                    },
+                    Artists = expectedArtists
                 };
                 var expected2 = new SimplifiedAlbumObject
                 {
@@ -57,11 +59,12 @@ namespace Albumify.Spotify.IntegrationTests
                     ReleaseDate = "2008-01-01",
                     Type = "album",
                     Images = new List<ImageObject>
-                {
-                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100"},
-                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100"},
-                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
-                }
+                    {
+                        new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b2734ca3bc839b9589963f995100"},
+                        new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e024ca3bc839b9589963f995100"},
+                        new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d000048514ca3bc839b9589963f995100"}
+                    },
+                    Artists = expectedArtists
                 };
                 var expected3 = new SimplifiedAlbumObject
                 {
@@ -71,11 +74,12 @@ namespace Albumify.Spotify.IntegrationTests
                     ReleaseDate = "2007-01-01",
                     Type = "single",
                     Images = new List<ImageObject>
-                {
-                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915"},
-                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915"},
-                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915"}
-                }
+                    {
+                        new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b27357503c47d6c316e9f78e7915"},
+                        new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e0257503c47d6c316e9f78e7915"},
+                        new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d0000485157503c47d6c316e9f78e7915"}
+                    },
+                    Artists = expectedArtists
                 };
                 var expected4 = new SimplifiedAlbumObject
                 {
@@ -85,11 +89,12 @@ namespace Albumify.Spotify.IntegrationTests
                     ReleaseDate = "2006-01-01",
                     Type = "single",
                     Images = new List<ImageObject>
-                {
-                    new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f"},
-                    new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f"},
-                    new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f"}
-                }
+                    {
+                        new ImageObject {Height = 640, Width = 640, Url = "https://i.scdn.co/image/ab67616d0000b273cf66ce837b0b1ca468c2c16f"},
+                        new ImageObject {Height = 300, Width = 300, Url = "https://i.scdn.co/image/ab67616d00001e02cf66ce837b0b1ca468c2c16f"},
+                        new ImageObject {Height = 64, Width = 64, Url = "https://i.scdn.co/image/ab67616d00004851cf66ce837b0b1ca468c2c16f"}
+                    },
+                    Artists = expectedArtists
                 };
                 var expected = new List<SimplifiedAlbumObject> { expected1, expected2, expected3, expected4 };
                 result.Should().BeEquivalentTo(expected);
@@ -107,7 +112,8 @@ namespace Albumify.Spotify.IntegrationTests
                     Name = "A Fire So Big The Heavens Can See It",
                     NumberOfSongs = 10,
                     ReleaseDate = "2008-01-01",
-                    Type = "album"
+                    Type = "album",
+                    Artists = new List<SimplifiedArtistObject> { new SimplifiedArtistObject { Id = "4KDYAeFosJmednK9fNDBk3", Name = "Search The City"} }
                 };
                 var expected = new List<SimplifiedAlbumObject> { expected1 };
                 result.Should().BeEquivalentTo(expected, o => o.Excluding(e => e.Images));
@@ -784,6 +790,38 @@ namespace Albumify.Spotify.IntegrationTests
         private class TestHelpingObject
         {
             public List<Artist> Items { get; set; }
+        }
+    }
+
+    [TestClass]
+    public class TheSpotifyWebApi_WhenGettingAnArtistsAlbums
+    {
+        [TestMethod]
+        public async Task ReturnsTheAlbums()
+        {
+            const string THIRD_PARTY_ID_ARTIST = "09l3QuYe7ExcyAZYosgVJx";
+            var config = new TestingConfiguration().Build();
+            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+            var expected = await BuildExpectedAsync();
+            var result = await sut.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private static async Task<IEnumerable<Album>> BuildExpectedAsync()
+        {
+            var json = await File.ReadAllTextAsync("GetAnArtistsAlbums-Jonezetta.json");
+            var albums = JsonSerializer.Deserialize<TestHelpingObject>(json, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                AllowTrailingCommas = true,
+                ReadCommentHandling = JsonCommentHandling.Skip
+            });
+
+            return albums.Items;
+        }
+        private class TestHelpingObject
+        {
+            public List<Album> Items { get; set; }
         }
     }
 }

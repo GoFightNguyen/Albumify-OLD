@@ -21,6 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="GetAnArtistsAlbums-Jonezetta.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="SearchArtistsByName-Items-NormaJean.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
