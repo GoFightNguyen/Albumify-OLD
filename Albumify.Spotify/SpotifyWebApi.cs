@@ -11,7 +11,7 @@ using Albumify.Spotify.Models;
 
 namespace Albumify.Spotify
 {
-    public class SpotifyWebApi : ISpotifyService, I3rdPartyMusicService
+    public class SpotifyWebApi : I3rdPartyMusicService
     {
         private readonly HttpClient _httpClient;
         private readonly ISpotifyAuthorization _spotifyAuthorization;
@@ -30,6 +30,8 @@ namespace Albumify.Spotify
         /// <returns></returns>
         public async Task<IEnumerable<SimplifiedAlbumObject>> FindAlbumsByArtistAsync(string artistName)
         {
+            // TODO: remove this, but first look at the types of tests against it and see if they need handled somewhere else
+
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
             _httpClient.DefaultRequestHeaders.Authorization =

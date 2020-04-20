@@ -1,35 +1,22 @@
 ﻿using System.Diagnostics;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Albumify.Web.Models;
-using Albumify.Spotify;
-using System.Linq;
 
 namespace Albumify.Web.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ISpotifyService _spotifyMusicSource;
 
-        public HomeController(ILogger<HomeController> logger, ISpotifyService spotifyMusicSource)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            _spotifyMusicSource = spotifyMusicSource;
         }
 
-        public async Task<IActionResult> Index(string artist)
+        public IActionResult Index()
         {
-            // TODO: don't need this anymore, cleanup everything related
-            var albums = await _spotifyMusicSource.FindAlbumsByArtistAsync(artist);
-            var viewModels = albums
-                .Select(a => new AlbumViewModel(a))
-                .OrderByDescending(a => a.ReleaseDate)
-                .ThenBy(a => a.Name)
-                .ToList();
-
-            return View(viewModels);
+            return View();
         }
 
         public IActionResult Privacy()

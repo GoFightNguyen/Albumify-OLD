@@ -27,7 +27,6 @@ namespace Albumify.Web
             // Enable basic usage of IHttpClientFactory
             // By default, all clients created using IHttpClientFactory will record log messages for all requests
             services.AddHttpClient<ISpotifyAuthorization, SpotifyClientCredentialsFlow>();
-            services.AddHttpClient<ISpotifyService, SpotifyWebApi>();
             services.AddHttpClient<I3rdPartyMusicService, SpotifyWebApi>();
 
             // Register as a singleton since it takes a direct dependency on MongoClient, which suggests
