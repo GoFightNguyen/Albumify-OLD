@@ -20,7 +20,7 @@
                             <responsive-images class="card-img-top" images="@item.Images" alt="@item.ImagesAltText"></responsive-images>
                             <div class="card-body">
                                 <h6 class="card-title" style="text-align:center" dir="auto">@item.Name</h6>
-                                @*<a class="stretched-link" asp-controller="Artist" asp-action="fill_in" asp-route-id="@item.ThirdPartyId"></a>*@
+                                <a class="stretched-link" asp-controller="Artist" asp-action="Index" asp-route-id="@item.ThirdPartyId"></a>
                             </div>
                         </div>
                     </div>

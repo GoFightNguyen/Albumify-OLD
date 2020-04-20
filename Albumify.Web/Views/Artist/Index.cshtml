@@ -1,0 +1,53 @@
+﻿@model List<Albumify.Web.Models.AlbumViewModel>
+@{
+    ViewData["Title"] = "Artist's Albums";
+}
+
+<form asp-controller="Artist" asp-action="Search" method="get">
+    Artist: <input type="text" name="artistName" />
+    <input type="submit" value="Search" />
+</form>
+<div class="container-fluid">
+    <section>
+        <div>
+            <h1 dir="auto">Albums</h1>
+        </div>
+        <div class="container-fluid" style="padding:0">
+            <div class="row">
+                @foreach(var item in Model.Where(a => a.Type == "album"))
+                {
+                <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                    <div class="card" style="border: none;">
+                        <responsive-images class="card-img-top" images="@item.Images" alt="@item.ImagesAltText"></responsive-images>
+                        <div class="card-body">
+                            <h6 class="card-title" style="text-align:center" dir="auto">@item.Name</h6>
+                            <a class="stretched-link" asp-controller="Album" asp-action="Index" asp-route-id="@item.ThirdPartyId"></a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+    <section>
+        <div>
+            <h1 dir="auto">Singles and EPs</h1>
+        </div>
+        <div class="container-fluid" style="padding:0">
+            <div class="row">
+                @foreach (var item in Model.Where(a => a.Type == "single"))
+                {
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+                        <div class="card" style="border: none;">
+                            <responsive-images class="card-img-top" images="@item.Images" alt="@item.ImagesAltText"></responsive-images>
+                            <div class="card-body">
+                                <h6 class="card-title" style="text-align:center" dir="auto">@item.Name</h6>
+                                <a class="stretched-link" asp-controller="Album" asp-action="Index" asp-route-id="@item.ThirdPartyId"></a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

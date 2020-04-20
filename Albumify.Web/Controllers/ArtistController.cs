@@ -27,5 +27,17 @@ namespace Albumify.Web.Controllers
 
             return View(viewModels);
         }
+
+        public async Task<IActionResult> Index(string id)
+        {
+            var albums = await _albumifyService.GetAnArtistsAlbumsAsync(id);
+            var viewModels = albums
+                .Select(a => new AlbumViewModel(a))
+                .OrderByDescending(a => a.ReleaseDate)
+                .ThenBy(a => a.Name)
+                .ToList();
+
+            return View(viewModels);
+        }
     }
 }
