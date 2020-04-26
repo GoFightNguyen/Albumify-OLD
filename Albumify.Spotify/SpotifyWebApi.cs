@@ -84,8 +84,6 @@ namespace Albumify.Spotify
 
         public async Task<List<Album>> GetAnArtistsAlbumsAsync(string thirdPartyId)
         {
-            // TODO: no matches
-
             var accessToken = await _spotifyAuthorization.RequestAsync();
 
             _httpClient.DefaultRequestHeaders.Authorization =
@@ -100,11 +98,20 @@ namespace Albumify.Spotify
             var encoded = WebUtility.HtmlEncode(thirdPartyId);
             var url = QueryHelpers.AddQueryString($"https://api.spotify.com/v1/artists/{encoded}/albums", queryParams);
             var response = await _httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
 
-            var responseStream = response.Content.ReadAsStreamAsync();
-            var searchResult = await JsonSerializer.DeserializeAsync<PagingObject<SimplifiedAlbumObject>>(await responseStream);
-            return searchResult.Items.ConvertAll(a => (Album)a);
+            if(response.IsSuccessStatusCode)
+            {
+                var responseStream = response.Content.ReadAsStreamAsync();
+                var searchResult = await JsonSerializer.DeserializeAsync<PagingObject<SimplifiedAlbumObject>>(await responseStream);
+                return searchResult.Items.ConvertAll(a => (Album)a);
+            }
+            else
+            {
+                var responseString = await response.Content.ReadAsStringAsync();
+                var error = JsonSerializer.Deserialize<UnsuccessfulResponse>(responseString);
+                // Log error as warning
+                return new List<Album>();
+            }
         }
     }
 }

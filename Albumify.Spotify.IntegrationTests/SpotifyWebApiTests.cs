@@ -162,12 +162,35 @@ namespace Albumify.Spotify.IntegrationTests
     [TestClass]
     public class TheSpotifyWebApi_WhenGettingAnArtistsAlbums
     {
+        private static SpotifyWebApi sut;
+
+        [ClassInitialize]
+        public static void ClassInitialize(TestContext _)
+        {
+            var config = new TestingConfiguration().Build();
+            sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
+        }
+
+        [TestMethod]
+        public async Task ReturnsEmpty_ForNonExistingId()
+        {
+            const string THIRD_PARTY_ID_ARTIST = "NonExistingIdIsWhatIAm";
+            var result = await sut.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST);
+            result.Should().BeEmpty();
+        }
+
+        [TestMethod]
+        public async Task ReturnsEmpty_ForInvalidId()
+        {
+            const string THIRD_PARTY_ID_ARTIST = "InvalidIdTooShort";
+            var result = await sut.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST);
+            result.Should().BeEmpty();
+        }
+
         [TestMethod]
         public async Task ReturnsTheAlbums()
         {
             const string THIRD_PARTY_ID_ARTIST = "09l3QuYe7ExcyAZYosgVJx";
-            var config = new TestingConfiguration().Build();
-            var sut = new SpotifyWebApi(new HttpClient(), new SpotifyClientCredentialsFlow(config, new HttpClient()));
             var expected = await BuildExpectedAsync();
             var result = await sut.GetAnArtistsAlbumsAsync(THIRD_PARTY_ID_ARTIST);
             result.Should().BeEquivalentTo(expected);
