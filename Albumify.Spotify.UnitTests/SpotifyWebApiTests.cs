@@ -14,7 +14,7 @@ using Albumify.Spotify.Models;
 namespace Albumify.Spotify.UnitTests
 {
     [TestClass]
-    public class TheSpotifyWebApi_WhenFindingAlbumsByArtist
+    public class TheSpotifyWebApi_WhenGettingAnArtistsAlbums
     {
         [TestMethod]
         public async Task HandlesAlbums_WithAFullReleaseDateOrJustAYear()
@@ -25,10 +25,10 @@ namespace Albumify.Spotify.UnitTests
 
             // Act
             var sut = new SpotifyWebApi(httpClient, spotifyAuthorization);
-            var result = await sut.FindAlbumsByArtistAsync("does not matter for this test");
+            var result = await sut.GetAnArtistsAlbumsAsync("does not matter for this test");
 
             // Assert
-            var expected = new List<string> { "2016-09-09", "1978" };
+            var expected = new List<string> { "2019-10-25", "2005" };
             result.Select(r => r.ReleaseDate).Should().BeEquivalentTo(expected);
         }
 

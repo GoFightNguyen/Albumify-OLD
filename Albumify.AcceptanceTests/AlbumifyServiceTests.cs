@@ -117,17 +117,17 @@ namespace Albumify.AcceptanceTests
                         new Track { Name = "Always Knew", Number = 1 },
                         new Track { Name = "Facts", Number = 2 },
                         new Track { Name = "Broke", Number = 3 },
-                        new Track { Name = "Blessings", Number = 4 },
-                        new Track { Name = "Whatchu Mean", Number = 5 },
-                        new Track { Name = "Hammer Time", Number = 6 },
+                        new Track { Name = "Blessings (feat. Ty Dolla $ign)", Number = 4 },
+                        new Track { Name = "Whatchu Mean (feat. Aha Gazelle)", Number = 5 },
+                        new Track { Name = "Hammer Time (feat. 1K Phew)", Number = 6 },
                         new Track { Name = "Come and Get Me", Number = 7 },
-                        new Track { Name = "Lucked Up", Number = 8 },
-                        new Track { Name = "Wish You the Best", Number = 9 },
+                        new Track { Name = "Lucked Up (feat. Nija)", Number = 8 },
+                        new Track { Name = "Wish You the Best (feat. Verse Simmonds)", Number = 9 },
                         new Track { Name = "Can't Stop Me Now (Destination)", Number = 10 },
-                        new Track { Name = "I'll Find You", Number = 11 },
+                        new Track { Name = "I'll Find You (feat. Tori Kelly)", Number = 11 },
                         new Track { Name = "8:28", Number = 12 },
-                        new Track { Name = "Cry For You", Number = 13 },
-                        new Track { Name = "Worth It", Number = 14 }
+                        new Track { Name = "Cry For You (feat. Taylor Hill)", Number = 13 },
+                        new Track { Name = "Worth It (feat. Kierra Sheard & Jawan Harris)", Number = 14 }
                     },
                 Type = "album"
             };
