@@ -1,0 +1,3 @@
+# ensure all files are checked in using UNIX line endings while letting anyone
+# edit files using their local operating system’s default line endings. 
+* text=auto
