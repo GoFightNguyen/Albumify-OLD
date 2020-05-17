@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Spotify.UnitTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.Spotify.IntegrationTests", "Albumify.Spotify.IntegrationTests\Albumify.Spotify.IntegrationTests.csproj", "{BBC56044-F15A-4CAC-9748-E32B1BBE991E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Albumify.AcceptanceTests", "Albumify.AcceptanceTests\Albumify.AcceptanceTests.csproj", "{A650D12B-6300-47C5-B97F-F26058E1CCB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Albumify.AcceptanceTests", "Albumify.AcceptanceTests\Albumify.AcceptanceTests.csproj", "{A650D12B-6300-47C5-B97F-F26058E1CCB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -167,6 +167,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F763858D-E209-46BD-940A-12C09234A824} = {7D01B412-C79B-4E3B-8884-0F03C0AD56B3}
+		{92BFAE78-1330-4337-B69D-85324B2609FD} = {7D01B412-C79B-4E3B-8884-0F03C0AD56B3}
 		{CDD25D91-9091-4BC9-93F6-6AC049BB5736} = {FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}
 		{D35C73DF-52BA-4AE3-8E6D-C79FF3E239D4} = {7D01B412-C79B-4E3B-8884-0F03C0AD56B3}
 		{A35638DD-05FB-408C-8AED-5F68F1FBE932} = {FF24E7B0-5BEF-4DA0-8360-0C59C28975B7}
