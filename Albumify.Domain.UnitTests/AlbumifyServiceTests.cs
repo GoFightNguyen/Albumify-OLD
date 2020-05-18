@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Albumify.Domain.Models;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Albumify.Domain.UnitTests
 {
@@ -222,12 +223,115 @@ namespace Albumify.Domain.UnitTests
     [TestClass]
     public class TheAlbumifyService_WhenSearchingArtistsByName
     {
-        [TestMethod]
-        public async Task ReturnsTheResultsOfTheThirdPartyMusicService()
+        private const string ArtistName = "Norma Jean";
+        private static Mock<I3rdPartyMusicService> thirdPartyMusicService;
+        private static Mock<IMyCollectionRepository> myCollection;
+        private static IEnumerable<Artist> result;
+
+        [ClassInitialize]
+        public static async Task TestInitialize(TestContext _)
         {
-            // Arrange
-            const string ArtistName = "Norma Jean";
+            thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
+            myCollection = new Mock<IMyCollectionRepository>();
+
+            StubTheArtistsReturnedByTheThirdPartyMusicService();
+            StubWhichArtistsAreInMyCollection();
+
+            var logger = new NullLogger<AlbumifyService>();
+            var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, myCollection.Object);
+            result = await sut.SearchArtistsByNameAsync(ArtistName);
+        }
+
+        [TestMethod]
+        public void SearchesTheThirdPartyMusicService() =>
+            thirdPartyMusicService.Verify(s => s.SearchArtistsByNameAsync(ArtistName), Times.Once);
+
+        [TestMethod]
+        public void QueriesMyCollectionForTheArtists() =>
+            myCollection.Verify(c => c.ContainsWhichOfTheseArtists("2fsk4VlJdNF6G8cCMDrrzB", "55b0Gfm53udtGBs8mmNXrH", "4ZhOkZoqfppPsyRFuoVgTv"), Times.Once);
+
+        [TestMethod]
+        public void FlagsCorrectArtistsAsInMyCollection() =>
+            result.Where(a => a.IsInMyCollection).Select(a => a.ThirdPartyId).Should().BeEquivalentTo(new List<string> { "55b0Gfm53udtGBs8mmNXrH" });
+
+        [TestMethod]
+        public void DoesNotArtistsNotInMyCollection() =>
+            result
+            .Where(a => !a.IsInMyCollection)
+            .Select(a => a.ThirdPartyId)
+            .Should()
+            .BeEquivalentTo(new List<string> { "2fsk4VlJdNF6G8cCMDrrzB", "4ZhOkZoqfppPsyRFuoVgTv" });
+
+        [TestMethod]
+        public void ReturnsTheResultsOfTheThirdPartyMusicService()
+        {
             var expected = new List<Artist>
+            {
+                new Artist
+                {
+                    Name = "Norma Jean Martine",
+                    ThirdPartyId = "2fsk4VlJdNF6G8cCMDrrzB",
+                    Images = new List<Image>
+                    {
+                        new Image
+                        {
+                            Height = 640,
+                            Url = "https://i.scdn.co/image/3bafc579f8582e3d65eb35e31f1891901aa76749",
+                            Width = 640
+                        },
+                        new Image
+                        {
+                            Height = 320,
+                            Url = "https://i.scdn.co/image/2ea1b920b93a7d1480009135ec2bc15671725154",
+                            Width = 320
+                        },
+                        new Image
+                        {
+                            Height = 160,
+                            Url = "https://i.scdn.co/image/037893c02cb3e449c2f97ef8e71a26889f6cdec8",
+                            Width = 160
+                        }
+                    }
+                },
+                new Artist
+                {
+                    Name = "Norma Jean",
+                    IsInMyCollection = true,
+                    ThirdPartyId = "55b0Gfm53udtGBs8mmNXrH",
+                    Images = new List<Image>
+                    {
+                        new Image
+                        {
+                            Height = 640,
+                            Url = "https://i.scdn.co/image/4f4fb36a3c564d0078be2e21962ee47724747b44",
+                            Width = 640
+                        },
+                        new Image
+                        {
+                            Height = 320,
+                            Url = "https://i.scdn.co/image/8717743daaf2e2b2f53008e5835232f9e90d5897",
+                            Width = 320
+                        },
+                        new Image
+                        {
+                            Height = 160,
+                            Url = "https://i.scdn.co/image/e99dfcc008ac74efced891cda956f6e4d0463260",
+                            Width = 160
+                        }
+                    }
+                },
+                new Artist
+                {
+                    Name = "Norma Jean Moslander",
+                    ThirdPartyId = "4ZhOkZoqfppPsyRFuoVgTv"
+                }
+            };
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private static void StubTheArtistsReturnedByTheThirdPartyMusicService()
+        {
+            var artists = new List<Artist>
             {
                 new Artist
                 {
@@ -288,16 +392,14 @@ namespace Albumify.Domain.UnitTests
                 }
             };
 
-            var thirdPartyMusicService = new Mock<I3rdPartyMusicService>();
-            thirdPartyMusicService.Setup(s => s.SearchArtistsByNameAsync(ArtistName)).ReturnsAsync(expected);
+            thirdPartyMusicService.Setup(s => s.SearchArtistsByNameAsync(It.IsAny<string>())).ReturnsAsync(artists);
+        }
 
-            // Act
-            var logger = new NullLogger<AlbumifyService>();
-            var sut = new AlbumifyService(logger, thirdPartyMusicService.Object, null);
-            var result = await sut.SearchArtistsByNameAsync(ArtistName);
-
-            // Assert
-            result.Should().BeEquivalentTo(expected);
+        private static void StubWhichArtistsAreInMyCollection()
+        {
+            myCollection
+                .Setup(c => c.ContainsWhichOfTheseArtists(It.IsAny<string[]>()))
+                .ReturnsAsync(new List<string> { "55b0Gfm53udtGBs8mmNXrH" });
         }
     }
 

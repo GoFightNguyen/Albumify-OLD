@@ -8,6 +8,8 @@ namespace Albumify.Domain.Models
         public string Name { get; set; }
         public List<Image> Images { get; set; } = new List<Image>();
 
+        public bool IsInMyCollection { get; set; }
+
         internal static Artist CreateForUnknown()
             => new Artist
             {

@@ -1,4 +1,5 @@
 ﻿using Albumify.Domain.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Albumify.Domain
@@ -19,5 +20,12 @@ namespace Albumify.Domain
         /// <param name="thirdPartyId"></param>
         /// <returns></returns>
         Task<Album> FindBy3rdPartyIdAsync(string thirdPartyId);
+
+        /// <summary>
+        /// Using the list of artist Third-Party Ids provided, return the ones which are in my collection
+        /// </summary>
+        /// <param name="thirdPartyIds"></param>
+        /// <returns></returns>
+        Task<IEnumerable<string>> ContainsWhichOfTheseArtists(params string[] thirdPartyIds);
     }
 }

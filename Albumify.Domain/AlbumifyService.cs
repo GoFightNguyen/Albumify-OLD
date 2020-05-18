@@ -1,6 +1,7 @@
 ﻿using Albumify.Domain.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Albumify.Domain
@@ -54,9 +55,15 @@ namespace Albumify.Domain
         /// <returns></returns>
         public async Task<List<Artist>> SearchArtistsByNameAsync(string name)
         {
-            // TODO: flag as in collection
             // TODO: order in collection as higher
-            return await _thirdPartyMusicService.SearchArtistsByNameAsync(name);
+            var artists = await _thirdPartyMusicService.SearchArtistsByNameAsync(name);
+            var artistsInMyCollection = await _myCollectionRepo.ContainsWhichOfTheseArtists(artists.Select(a => a.ThirdPartyId).ToArray());
+
+            foreach (var artist in artists)
+                if (artistsInMyCollection.Contains(artist.ThirdPartyId))
+                    artist.IsInMyCollection = true;
+
+            return artists;
         }
 
         /// <summary>
