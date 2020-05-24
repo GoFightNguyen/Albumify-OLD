@@ -1,10 +1,13 @@
 ﻿using Albumify.Domain;
 using Albumify.Domain.Models;
 using Microsoft.Extensions.Configuration;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -87,6 +90,42 @@ namespace Albumify.MongoDB
         {
             var album = await _albums.Find(a => a.ThirdPartyId == thirdPartyId).SingleOrDefaultAsync();
             return album ?? Album.CreateForUnknown(thirdPartyId);
+        }
+
+        public async Task<IEnumerable<string>> ContainsWhichOfTheseArtists(params string[] thirdPartyIds)
+        {
+            /*
+               db.albums.aggregate([
+               {$match: {"Artists.ThirdPartyId": {$in:["6PDLwWvgYNMfBRLqC1h5cJ","55b0Gfm53udtGBs8mmNXrH"]}}},
+               {$project:{_id:0, ThirdPartyIds:"$Artists.ThirdPartyId"}}
+               ]).pretty()
+             */
+
+            var match = new BsonDocument
+            {
+                {"$match", new BsonDocument("Artists.ThirdPartyId", new BsonDocument("$in", new BsonArray(thirdPartyIds))) }
+            };
+            var projection = new BsonDocument
+            {
+                {"$project", new BsonDocument(new Dictionary<string, object>
+                    {
+                        ["_id"] = 0,
+                        ["ThirdPartyIds"] = "$Artists.ThirdPartyId"
+                    })
+                }
+            };
+
+            var matchingAlbumProjections = await _albums
+                .Aggregate()
+                .AppendStage<BsonDocument>(match)
+                .AppendStage<BsonDocument>(projection)
+                .ToListAsync();
+
+            var tpis =  matchingAlbumProjections
+                .SelectMany(p => p.GetValue("ThirdPartyIds").AsBsonArray.Values.Select(v => v.AsString))
+                .Distinct();
+
+            return tpis.Intersect(thirdPartyIds);
         }
     }
 
